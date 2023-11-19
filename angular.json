@@ -65,10 +65,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "shotgun-app-angular:build:production"
+              "buildTarget": "shotgun-app-angular:build:production"
             },
             "development": {
-              "browserTarget": "shotgun-app-angular:build:development"
+              "buildTarget": "shotgun-app-angular:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -76,7 +76,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "shotgun-app-angular:build"
+            "buildTarget": "shotgun-app-angular:build"
           }
         },
         "test": {
