@@ -7,18 +7,52 @@
 }
 
 .car-list {
-    border: solid 1px #ccc;
+    box-sizing: border-box;
     height: 100%;
     width: 100%;
 }
 
-.filled-seat {
+.seat {
+    box-sizing: border-box;
     height: 100%;
     width: 100%;
+
+    border: 1px solid black;
+    border-radius: 4px;
+    padding: 4px;
+
+    .seat-text {
+        box-sizing: border-box;
+        height: 100%;
+        width: 100%;
+
+        text-align: center;
+        color: black;
+        font-size: 12px;
+        font-weight: 700;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+}
+.seat-filled {
+    @extend .seat;
+    background: green;
+}
+.seat-empty {
+    @extend .seat;
+    background: lightgrey;
+    .seat-text {
+        border: 1px dashed grey;
+    }
 }
 
 .drag-hovered-seat {
     height: 100%;
     width: 100%;
     background: grey;
+}
+
+.cdk-drag-placeholder {
+    background: blue;
 }

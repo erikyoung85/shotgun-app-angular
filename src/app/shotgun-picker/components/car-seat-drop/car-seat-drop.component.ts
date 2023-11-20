@@ -14,11 +14,13 @@ export class CarSeatDropComponent {
 
     isDragHovered = false;
 
-    onDrop(event: CdkDragDrop<(Person | undefined)[]>) {
+    onDrop(event: CdkDragDrop<(Person)[]>) {
         this.isDragHovered = false;
 
-        const newPerson = event.previousContainer.data?.[event.previousIndex];
-        this.selectedChange.emit(newPerson)
+        if (event.container !== event.previousContainer) {
+            const newPerson = event.previousContainer.data?.[event.previousIndex];
+            this.selectedChange.emit(newPerson)
+        }
     }
 
     onDragEntered() {
