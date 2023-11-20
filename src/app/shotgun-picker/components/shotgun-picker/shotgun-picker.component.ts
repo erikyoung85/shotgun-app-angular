@@ -51,9 +51,18 @@ export class ShotgunPickerComponent implements OnInit {
         }
     }
 
-    onSeatChange(seat: Seat, person: Person | undefined) {
-        console.log('new ' + seat + ': ', person);
-        this.store.dispatch(shotgunPickerActions.SetCarSeatSelection({ selections: {[seat]: person?.id} }));
+    onSeatChange(seat: Seat, newPerson: Person | undefined) {
+        console.log('new ' + seat + ': ', newPerson);
+        const selections = {
+            [seat]: newPerson?.id
+        }
+
+        const oldSeat = newPerson?.seat;
+        if (oldSeat !== undefined) {
+            selections[oldSeat] = undefined;
+        }
+        
+        this.store.dispatch(shotgunPickerActions.SetCarSeatSelection({ selections}));
     }
 
     ngOnInit(): void {

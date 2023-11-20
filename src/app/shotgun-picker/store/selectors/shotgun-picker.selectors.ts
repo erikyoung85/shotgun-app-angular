@@ -1,14 +1,19 @@
 import { createFeatureSelector, createSelector } from "@ngrx/store";
-import { Seat, ShotgunPickerState, shotgunPickerFeatureKey } from "../state/shotgun-picker.state";
+import { Person, Seat, ShotgunPickerState, shotgunPickerFeatureKey } from "../state/shotgun-picker.state";
 
 export const selectShotgunPickerState = createFeatureSelector<ShotgunPickerState>(shotgunPickerFeatureKey);
 
-export const selectAllPeople = createSelector(selectShotgunPickerState, (state) => {
-    return state.allPeople
-});
-
 export const selectCarSeatsSelection = createSelector(selectShotgunPickerState, (state) => {
     return state.carSeatsSelection
+});
+export const selectAllPeople = createSelector(selectShotgunPickerState, (state): Person[] => {
+    return state.allPeople.map(person => {
+        const currSeat = Object.keys(state.carSeatsSelection).find((seat) => state.carSeatsSelection[seat as Seat] === person.id)
+        return {
+            ...person,
+            seat: currSeat as Seat,
+        }
+    })
 });
 
 export const selectDriverPerson = createSelector(selectAllPeople, selectCarSeatsSelection,

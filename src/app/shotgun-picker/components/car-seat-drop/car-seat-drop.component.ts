@@ -16,9 +16,9 @@ export class CarSeatDropComponent {
 
     onDrop(event: CdkDragDrop<(Person | undefined)[]>) {
         this.isDragHovered = false;
-        
-        const item = event.previousContainer.data?.[event.previousIndex];
-        this.selectedChange.emit(item)
+
+        const newPerson = event.previousContainer.data?.[event.previousIndex];
+        this.selectedChange.emit(newPerson)
     }
 
     onDragEntered() {

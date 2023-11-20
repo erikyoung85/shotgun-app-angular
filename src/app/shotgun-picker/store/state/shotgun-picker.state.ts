@@ -8,6 +8,7 @@ export interface ShotgunPickerState {
 export interface Person {
     id: number;
     name: string;
+    seat?: Seat | undefined;
 }
 
 export interface CarSeatsSelection {
