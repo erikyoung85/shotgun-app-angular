@@ -1,5 +1,6 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CdkTreeModule } from '@angular/cdk/tree';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
@@ -68,6 +69,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
         LayoutModule,
         MatExpansionModule,
         MatSnackBarModule,
+        DragDropModule
     ],
     exports: [
         CdkTreeModule,
@@ -104,6 +106,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
         LayoutModule,
         MatExpansionModule,
         MatSnackBarModule,
+        DragDropModule
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

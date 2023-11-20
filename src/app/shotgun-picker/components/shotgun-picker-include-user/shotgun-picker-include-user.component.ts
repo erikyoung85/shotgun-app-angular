@@ -1,8 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Person } from '../../models/person';
 import { Store } from '@ngrx/store';
 import * as shotgunPickerSelectors from '../../store/selectors/shotgun-picker.selectors';
-import * as shotgunPickerActions from '../../store/actions/shotgun-picker.actions';
+import { Person } from '../../store/state/shotgun-picker.state';
 
 
 @Component({
@@ -12,11 +11,12 @@ import * as shotgunPickerActions from '../../store/actions/shotgun-picker.action
 export class ShotgunPickerIncludeUserComponent implements OnInit {
     constructor(private store: Store) {}
 
-    displayedColumns = ['id', 'name'];
+    displayedColumns = ['id', 'name', 'isInCar'];
 
     allPeople$ = this.store.select(shotgunPickerSelectors.selectAllPeople);
-    selectedPeople$ = this.store.select(shotgunPickerSelectors.selectSelectedPeople);
 
     ngOnInit(): void {
     }
+
+    onToggleRow(person: Person) {}
 }

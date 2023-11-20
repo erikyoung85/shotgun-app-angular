@@ -1,3 +1,58 @@
-<div fxLayoutAlign="center center" style="width: 100vw; height: 100vh">
-    <app-shotgun-picker-include-user></app-shotgun-picker-include-user>
+<div cdkDropListGroup class="drag-container">
+    <div
+        class="drag-list-horizontal"
+        cdkDropList
+        cdkDropListOrientation="horizontal"
+        cdkDragBoundary=".drag-container"
+        [cdkDropListData]="allPeople$ | async"
+        cdkDropListSortingDisabled
+    >
+        <div 
+            class="drag-box-horizontal" 
+            *ngFor="let person of allPeople$ | async"
+            cdkDrag 
+            cdkDragBoundary=".drag-container"
+        >
+            {{person.name}}
+        </div>
+    </div>
+  
+    <div style="margin-top: 4rem">
+        <h2>Car</h2>
+  
+        <div fxLayout="row" fxLayoutAlign="center">
+            <app-car-seat-drop
+                [selected]="(driverPerson$ | async) ?? undefined"
+                (selectedChange)="onSeatChange(Seat.DRIVER, $event)"
+            ></app-car-seat-drop>
+            <app-car-seat-drop
+                [selected]="(shotgunPerson$ | async) ?? undefined"
+                (selectedChange)="onSeatChange(Seat.SHOTGUN, $event)"
+            ></app-car-seat-drop>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="center">
+            <app-car-seat-drop
+                [selected]="(leftNutPerson$ | async) ?? undefined"
+                (selectedChange)="onSeatChange(Seat.LEFT_NUT, $event)"
+            ></app-car-seat-drop>
+            <app-car-seat-drop
+                [selected]="(middlePerson$ | async) ?? undefined"
+                (selectedChange)="onSeatChange(Seat.MIDDLE, $event)"
+            ></app-car-seat-drop>
+            <app-car-seat-drop
+                [selected]="(rightNutPerson$ | async) ?? undefined"
+                (selectedChange)="onSeatChange(Seat.RIGHT_NUT, $event)"
+            ></app-car-seat-drop>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="center">
+            <app-car-seat-drop
+                [selected]="(leftBackPerson$ | async) ?? undefined"
+                (selectedChange)="onSeatChange(Seat.LEFT_BACK, $event)"
+            ></app-car-seat-drop>
+            <app-car-seat-drop
+                [selected]="(rightBackPerson$ | async) ?? undefined"
+                (selectedChange)="onSeatChange(Seat.RIGHT_BACK, $event)"
+            ></app-car-seat-drop>
+        </div>
+    </div>
 </div>

@@ -1,0 +1,18 @@
+<div
+    class="car-list"
+    cdkDropList
+    cdkDragBoundary=".drag-container"
+    [cdkDropListData]="[selected]"
+    (cdkDropListDropped)="onDrop($event)"
+    (cdkDropListEntered)="onDragEntered()"
+    (cdkDropListExited)="onDragExited()"
+>
+    <div 
+        [fxHide]="isDragHovered"
+        class="filled-seat" 
+        cdkDrag 
+        cdkDragBoundary=".drag-container"
+    >
+        {{selected?.name ?? 'Drag a person here'}}
+    </div>
+</div>

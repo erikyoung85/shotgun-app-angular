@@ -8,9 +8,10 @@ import { StoreModule } from '@ngrx/store';
 import { ShotgunPickerEffects } from './store/effects/shotgun-picker.effects';
 import { shotgunPickerReducer } from './store/reducers/shotgun-picker.reducer';
 import { shotgunPickerFeatureKey } from './store/state/shotgun-picker.state';
+import { CarSeatDropComponent } from './components/car-seat-drop/car-seat-drop.component';
 
 @NgModule({
-  declarations: [ShotgunPickerComponent, ShotgunPickerIncludeUserComponent],
+  declarations: [ShotgunPickerComponent, ShotgunPickerIncludeUserComponent, CarSeatDropComponent],
   exports: [ShotgunPickerComponent],
   imports: [
     CommonModule,

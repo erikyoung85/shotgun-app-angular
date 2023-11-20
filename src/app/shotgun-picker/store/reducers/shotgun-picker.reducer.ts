@@ -22,5 +22,15 @@ export const shotgunPickerReducer = createReducer(INITIAL_SHOTGUN_PICKER_STATE,
             ...state,
             allPeople: [],
         }
-    })
+    }),
+
+    on(shotgunPickerActions.SetCarSeatSelection, (state, action): ShotgunPickerState => {
+        return {
+            ...state,
+            carSeatsSelection: {
+                ...state.carSeatsSelection,
+                ...action.selections,
+            },
+        }
+    }),
 )

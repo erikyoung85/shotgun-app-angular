@@ -1,5 +1,5 @@
 import { createAction, props } from "@ngrx/store";
-import { Person } from "../../models/person";
+import { CarSeatsSelection, Person } from "../state/shotgun-picker.state";
 
 export const FetchAllPeople = createAction('[Shotgun Picker] Get All People');
 export const FetchAllPeopleSuccess = createAction(
@@ -9,4 +9,9 @@ export const FetchAllPeopleSuccess = createAction(
 export const FetchAllPeopleFailure = createAction(
     '[Shotgun Picker] Get All People Failure',
     props<{ errMsg: string }>(),
+);
+
+export const SetCarSeatSelection = createAction(
+    '[Shotgun Picker] Set driver id',
+    props<{ selections: Partial<CarSeatsSelection> }>(),
 );
