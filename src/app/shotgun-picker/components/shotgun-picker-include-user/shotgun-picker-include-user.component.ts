@@ -12,6 +12,8 @@ import * as shotgunPickerActions from '../../store/actions/shotgun-picker.action
 export class ShotgunPickerIncludeUserComponent implements OnInit {
     constructor(private store: Store) {}
 
+    displayedColumns = ['id', 'name'];
+
     allPeople$ = this.store.select(shotgunPickerSelectors.selectAllPeople);
     selectedPeople$ = this.store.select(shotgunPickerSelectors.selectSelectedPeople);
 
