@@ -11,8 +11,8 @@ export default async function handler(
         `;
 
         const rows = result.rows;
-        return response.status(200).json({ rows });
+        return response.status(200).json(rows);
     } catch (error) {
-        return response.status(500).json({ error });
+        return response.status(500).json(error);
     }
 }

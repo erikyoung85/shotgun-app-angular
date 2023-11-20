@@ -6,19 +6,27 @@ import { AppComponent } from './app.component';
 import { ShotgunPickerModule } from './shotgun-picker/shotgun-picker.module';
 import { HttpClientModule } from '@angular/common/http';
 import { NgMaterialModule } from './ng-material.module';
+import { StoreModule } from '@ngrx/store';
+import { metaReducers } from './meta.reducer';
+import { reducers } from './root.reducer';
+import { EffectsModule } from '@ngrx/effects';
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    ShotgunPickerModule,
-    HttpClientModule,
-    NgMaterialModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent
+    ],
+    imports: [
+        StoreModule.forRoot(reducers, {
+            metaReducers: metaReducers,
+        }),
+        EffectsModule.forRoot([]),
+        BrowserModule,
+        AppRoutingModule,
+        ShotgunPickerModule,
+        HttpClientModule,
+        NgMaterialModule
+    ],
+    providers: [],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }

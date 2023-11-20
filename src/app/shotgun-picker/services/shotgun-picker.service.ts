@@ -1,6 +1,6 @@
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { Person } from '../models/person';
 
 @Injectable({
@@ -10,8 +10,8 @@ export class ShotgunPickerService {
 
     constructor(private http: HttpClient) { }
 
-    getPeople(): Observable<HttpResponse<Person[]>> {
+    getPeople(): Observable<Person[]> {
         const url = `/api/people`;
-        return this.http.get<HttpResponse<Person[]>>(url)
+        return this.http.get<Person[]>(url);
     }
 }
