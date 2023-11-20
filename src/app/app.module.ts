@@ -10,6 +10,7 @@ import { StoreModule } from '@ngrx/store';
 import { metaReducers } from './meta.reducer';
 import { reducers } from './root.reducer';
 import { EffectsModule } from '@ngrx/effects';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
     declarations: [
@@ -24,7 +25,8 @@ import { EffectsModule } from '@ngrx/effects';
         AppRoutingModule,
         ShotgunPickerModule,
         HttpClientModule,
-        NgMaterialModule
+        NgMaterialModule,
+        BrowserAnimationsModule
     ],
     providers: [],
     bootstrap: [AppComponent]
