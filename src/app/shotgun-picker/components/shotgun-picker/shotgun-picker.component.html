@@ -4,17 +4,17 @@
         cdkDropList
         cdkDropListOrientation="horizontal"
         cdkDragBoundary=".drag-container"
-        [cdkDropListData]="allPeople$ | async"
+        [cdkDropListData]="allPassengers$ | async"
         cdkDropListSortingDisabled
     >
         <div 
             class="drag-box-horizontal" 
-            *ngFor="let person of allPeople$ | async"
+            *ngFor="let passenger of allPassengers$ | async"
             cdkDrag 
             cdkDragBoundary=".drag-container"
         >
             <div *cdkDragPlaceholder></div>
-            {{person.name}}
+            {{passenger.name}}
         </div>
     </div>
   

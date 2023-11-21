@@ -5,22 +5,22 @@ import { Seat, ShotgunPickerState } from "../state/shotgun-picker.state";
 
 
 export const shotgunPickerReducer = createReducer(INITIAL_SHOTGUN_PICKER_STATE,
-    on(shotgunPickerActions.FetchAllPeople, (state): ShotgunPickerState => {
+    on(shotgunPickerActions.InitPassengers, (state): ShotgunPickerState => {
         return {
             ...state,
-            allPeople: [],
+            selectedPersonIds: [],
         }
     }),
-    on(shotgunPickerActions.FetchAllPeopleSuccess, (state, action): ShotgunPickerState => {
+    on(shotgunPickerActions.InitPassengersSuccess, (state, action): ShotgunPickerState => {
         return {
             ...state,
-            allPeople: action.people,
+            selectedPersonIds: action.personIds,
         }
     }),
-    on(shotgunPickerActions.FetchAllPeopleFailure, (state): ShotgunPickerState => {
+    on(shotgunPickerActions.InitPassengersFailure, (state): ShotgunPickerState => {
         return {
             ...state,
-            allPeople: [],
+            selectedPersonIds: [],
         }
     }),
 
@@ -31,14 +31,14 @@ export const shotgunPickerReducer = createReducer(INITIAL_SHOTGUN_PICKER_STATE,
         }
     }),
 
-    on(shotgunPickerActions.SetSeatPersonIdSelection, (state, action): ShotgunPickerState => {
+    on(shotgunPickerActions.SetSeatPassengerIdSelection, (state, action): ShotgunPickerState => {
         return {
             ...state,
             carSeatsSelection: {
                 ...state.carSeatsSelection,
                 [action.seat]: {
                     ...state.carSeatsSelection[action.seat],
-                    personId: action.personId,
+                    passengerId: action.passengerId,
                     isSetByUser: action.isSetByUser ?? false,
                 }
             },
@@ -67,7 +67,7 @@ export const shotgunPickerReducer = createReducer(INITIAL_SHOTGUN_PICKER_STATE,
                 if (!carSeat.isSetByUser) {
                     carSeatsSelection[seat] = {
                         ...carSeatsSelection[seat],
-                        personId: undefined,
+                        passengerId: undefined,
                         isSetByUser: false,
                     }
                 }

@@ -1,8 +1,12 @@
 import { createFeatureSelector, createSelector } from "@ngrx/store";
-import { Person, Seat, ShotgunPickerState, shotgunPickerFeatureKey } from "../state/shotgun-picker.state";
+import { Passenger, Seat, ShotgunPickerState, shotgunPickerFeatureKey } from "../state/shotgun-picker.state";
+import * as groupSelectors from 'src/app/group/store/selectors/group.selectors';
 
 export const selectShotgunPickerState = createFeatureSelector<ShotgunPickerState>(shotgunPickerFeatureKey);
 
+export const selectSelectedPersonIds = createSelector(selectShotgunPickerState, (state) => {
+    return state.selectedPersonIds
+});
 export const selectCarSeatsSelection = createSelector(selectShotgunPickerState, (state) => {
     return state.carSeatsSelection
 });
@@ -10,126 +14,133 @@ export const selectCarSeatsSelection = createSelector(selectShotgunPickerState, 
 export const selectAllCarSeats = createSelector(selectCarSeatsSelection, (carSeatsSelection) => {
     return Object.values(Seat).map(carSeat => carSeatsSelection[carSeat]);
 });
-export const selectAllPeople = createSelector(selectShotgunPickerState, selectAllCarSeats, (state, allCarSeats): Person[] => {
-    return state.allPeople.map(person => {
-        const currSeat = allCarSeats.find((carSeat) => carSeat.personId === person.id);
-        
-        return <Person>{
-            ...person,
-            carSeat: currSeat,
-        }
-    })
-});
 
-export const selectAvailablePeople = createSelector(selectAllPeople, (allPeople) => {
-    return allPeople.filter(person => person.carSeat === undefined);
+export const selectAllPassengers = createSelector(
+    groupSelectors.selectPersonDict,
+    selectSelectedPersonIds, 
+    selectAllCarSeats, 
+    (personDict, selectedPersonIds, allCarSeats): Passenger[] => {
+        const selectedPeople = selectedPersonIds.map(personId => 
+            personDict[personId]
+        ).filter(person => person !== undefined);
+
+        return selectedPeople.map(person => {
+            const currSeat = allCarSeats.find((carSeat) => carSeat.passengerId === person.id);
+            return <Passenger>{
+                ...person,
+                carSeat: currSeat,
+            }
+        })
+    }
+);
+
+export const selectPassengerDict = createSelector(selectAllPassengers, (allPassengers) => {
+    const passengerDict: {[personId: number]: Passenger} = {};
+    allPassengers.forEach(passenger => passengerDict[passenger.id] = passenger);
+    return passengerDict;
+})
+
+export const selectAvailablePassengers = createSelector(selectAllPassengers, (allPassengers) => {
+    return allPassengers.filter(passenger => passenger.carSeat === undefined);
 });
 export const selectAvailableSeats = createSelector(selectAllCarSeats, (allCarSeats) => {
-    return allCarSeats.filter(carSeat => carSeat.personId === undefined && !carSeat.isDisabled);
-});
-
-export const selectPersonDict = createSelector(selectAllPeople, (allPeople) => {
-    const personDict: {[personId: number]: Person} = {};
-    allPeople.forEach(person => {
-        personDict[person.id] = person;
-    })
-    return personDict;
+    return allCarSeats.filter(carSeat => carSeat.passengerId === undefined && !carSeat.isDisabled);
 });
 
 export const selectDriverSeat = createSelector(selectCarSeatsSelection,
     (carSeatsSelection) => carSeatsSelection[Seat.DRIVER]
 );
-export const selectDriverPersonId = createSelector(selectDriverSeat,
-    (carSeat) => carSeat.personId
+export const selectDriverPassengerId = createSelector(selectDriverSeat,
+    (carSeat) => carSeat.passengerId
 );
 export const selectDriverPerson = createSelector(
-    selectPersonDict, 
-    selectDriverPersonId,
-    (personDict, personId) => {
-        return personId ? personDict[personId] : undefined;
+    selectPassengerDict, 
+    selectDriverPassengerId,
+    (passengerDict, passengerId) => {
+        return passengerId ? passengerDict[passengerId] : undefined;
     }
 );
 
 export const selectShotgunSeat = createSelector(selectCarSeatsSelection,
     (carSeatsSelection) => carSeatsSelection[Seat.SHOTGUN]
 );
-export const selectShotgunPersonId = createSelector(selectShotgunSeat,
-    (carSeat) => carSeat.personId
+export const selectShotgunPassengerId = createSelector(selectShotgunSeat,
+    (carSeat) => carSeat.passengerId
 );
 export const selectShotgunPerson = createSelector(
-    selectPersonDict, 
-    selectShotgunPersonId,
-    (personDict, personId) => {
-        return personId ? personDict[personId] : undefined;
+    selectPassengerDict, 
+    selectShotgunPassengerId,
+    (passengerDict, passengerId) => {
+        return passengerId ? passengerDict[passengerId] : undefined;
     }
 );
 
 export const selectLeftNutSeat = createSelector(selectCarSeatsSelection,
     (carSeatsSelection) => carSeatsSelection[Seat.LEFT_NUT]
 );
-export const selectLeftNutPersonId = createSelector(selectLeftNutSeat,
-    (carSeat) => carSeat.personId
+export const selectLeftNutPassengerId = createSelector(selectLeftNutSeat,
+    (carSeat) => carSeat.passengerId
 );
 export const selectLeftNutPerson = createSelector(
-    selectPersonDict, 
-    selectLeftNutPersonId,
-    (personDict, personId) => {
-        return personId ? personDict[personId] : undefined;
+    selectPassengerDict, 
+    selectLeftNutPassengerId,
+    (passengerDict, passengerId) => {
+        return passengerId ? passengerDict[passengerId] : undefined;
     }
 );
 
 export const selectMiddleSeat = createSelector(selectCarSeatsSelection,
     (carSeatsSelection) => carSeatsSelection[Seat.MIDDLE]
 );
-export const selectMiddlePersonId = createSelector(selectMiddleSeat,
-    (carSeat) => carSeat.personId
+export const selectMiddlePassengerId = createSelector(selectMiddleSeat,
+    (carSeat) => carSeat.passengerId
 );
 export const selectMiddlePerson = createSelector(
-    selectPersonDict, 
-    selectMiddlePersonId,
-    (personDict, personId) => {
-        return personId ? personDict[personId] : undefined;
+    selectPassengerDict, 
+    selectMiddlePassengerId,
+    (passengerDict, passengerId) => {
+        return passengerId ? passengerDict[passengerId] : undefined;
     }
 );
 
 export const selectRightNutSeat = createSelector(selectCarSeatsSelection,
     (carSeatsSelection) => carSeatsSelection[Seat.RIGHT_NUT]
 );
-export const selectRightNutPersonId = createSelector(selectRightNutSeat,
-    (carSeat) => carSeat.personId
+export const selectRightNutPassengerId = createSelector(selectRightNutSeat,
+    (carSeat) => carSeat.passengerId
 );
 export const selectRightNutPerson = createSelector(
-    selectPersonDict, 
-    selectRightNutPersonId,
-    (personDict, personId) => {
-        return personId ? personDict[personId] : undefined;
+    selectPassengerDict, 
+    selectRightNutPassengerId,
+    (passengerDict, passengerId) => {
+        return passengerId ? passengerDict[passengerId] : undefined;
     }
 );
 
 export const selectLeftBackSeat = createSelector(selectCarSeatsSelection,
     (carSeatsSelection) => carSeatsSelection[Seat.LEFT_BACK]
 );
-export const selectLeftBackPersonId = createSelector(selectLeftBackSeat,
-    (carSeat) => carSeat.personId
+export const selectLeftBackPassengerId = createSelector(selectLeftBackSeat,
+    (carSeat) => carSeat.passengerId
 );
 export const selectLeftBackPerson = createSelector(
-    selectPersonDict, 
-    selectLeftBackPersonId,
-    (personDict, personId) => {
-        return personId ? personDict[personId] : undefined;
+    selectPassengerDict, 
+    selectLeftBackPassengerId,
+    (passengerDict, passengerId) => {
+        return passengerId ? passengerDict[passengerId] : undefined;
     }
 );
 
 export const selectRightBackSeat = createSelector(selectCarSeatsSelection,
     (carSeatsSelection) => carSeatsSelection[Seat.RIGHT_BACK]
 );
-export const selectRightBackPersonId = createSelector(selectRightBackSeat,
-    (carSeat) => carSeat.personId
+export const selectRightBackPassengerId = createSelector(selectRightBackSeat,
+    (carSeat) => carSeat.passengerId
 );
 export const selectRightBackPerson = createSelector(
-    selectPersonDict, 
-    selectRightBackPersonId,
-    (personDict, personId) => {
-        return personId ? personDict[personId] : undefined;
+    selectPassengerDict, 
+    selectRightBackPassengerId,
+    (passengerDict, passengerId) => {
+        return passengerId ? passengerDict[passengerId] : undefined;
     }
 );

@@ -1,13 +1,13 @@
+import { Person } from "src/app/group/store/state/group.state";
+
 export const shotgunPickerFeatureKey = 'shotgunPickerState';
 
 export interface ShotgunPickerState {
-    allPeople: Person[];
+    selectedPersonIds: number[];
     carSeatsSelection: CarSeatsSelection;
 }
 
-export interface Person {
-    id: number;
-    name: string;
+export interface Passenger extends Person {
     carSeat?: SeatSelection | undefined;
 }
 
@@ -23,7 +23,7 @@ export interface CarSeatsSelection {
 
 export interface SeatSelection {
     seat: Seat;
-    personId: number | undefined;
+    passengerId: number | undefined;
     isSetByUser: boolean;
     isDisabled: boolean;
 }

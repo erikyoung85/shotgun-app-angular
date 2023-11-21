@@ -1,11 +1,11 @@
 import { Actions, concatLatestFrom, createEffect, ofType } from "@ngrx/effects";
 import { Action, Store } from "@ngrx/store";
-import { ShotgunPickerService } from "../../services/shotgun-picker.service";
 import { Injectable } from "@angular/core";
 import { catchError, map, of, switchMap } from "rxjs";
 import * as shotgunPickerActions from '../actions/shotgun-picker.actions';
 import * as shotgunPickerSelectors from '../selectors/shotgun-picker.selectors';
-import { Seat } from "../state/shotgun-picker.state";
+import * as groupSelectors from 'src/app/group/store/selectors/group.selectors';
+import { ShotgunPickerService } from "../../services/shotgun-picker.service";
 
 
 @Injectable()
@@ -14,11 +14,12 @@ export class ShotgunPickerEffects {
 
     fetchAllPeople$ = createEffect(() =>
         this.actions$.pipe(
-            ofType(shotgunPickerActions.FetchAllPeople),
-            switchMap(() => {
-                return this.shotgunPickerService.getPeople().pipe(
-                    map((people) => shotgunPickerActions.FetchAllPeopleSuccess({ people })),
-                    catchError((errMsg) => of(shotgunPickerActions.FetchAllPeopleFailure({ errMsg })))
+            ofType(shotgunPickerActions.InitPassengers),
+            concatLatestFrom(() => [this.store.select(groupSelectors.selectGroupId)]),
+            switchMap(([, groupId]) => {
+                return this.shotgunPickerService.getSelectedPersonIdsForGroup(groupId).pipe(
+                    map((personIds) => shotgunPickerActions.InitPassengersSuccess({ personIds })),
+                    catchError((errMsg) => of(shotgunPickerActions.InitPassengersFailure({ errMsg })))
                 )
             })
         ),
@@ -28,20 +29,20 @@ export class ShotgunPickerEffects {
         this.actions$.pipe(
             ofType(shotgunPickerActions.RandomPickSeatsForPeople),
             concatLatestFrom(() => [
-                this.store.select(shotgunPickerSelectors.selectAvailablePeople),
+                this.store.select(shotgunPickerSelectors.selectAvailablePassengers),
                 this.store.select(shotgunPickerSelectors.selectAvailableSeats),
             ]),
-            switchMap(([, availablePeople, availableSeats]) => {
+            switchMap(([, availablePassengers, availableSeats]) => {
                 const actions: Action[] = [];
-                const availablePeopleMut = [...availablePeople]
+                const availablePassengersMut = [...availablePassengers]
 
                 for (const seatSelection of availableSeats) {
-                    if (availablePeopleMut.length === 0) break;
+                    if (availablePassengersMut.length === 0) break;
 
-                    const person = this.randomPop(availablePeopleMut);
-                    actions.push(shotgunPickerActions.SetSeatPersonIdSelection({ 
+                    const passenger = this.randomPop(availablePassengersMut);
+                    actions.push(shotgunPickerActions.SetSeatPassengerIdSelection({ 
                         seat: seatSelection.seat, 
-                        personId: person?.id,
+                        passengerId: passenger?.id,
                         isSetByUser: false,
                     }));
                 }

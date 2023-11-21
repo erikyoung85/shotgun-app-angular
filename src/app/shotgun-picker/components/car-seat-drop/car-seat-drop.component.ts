@@ -1,6 +1,6 @@
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
-import { Person } from '../../store/state/shotgun-picker.state';
+import { Passenger } from '../../store/state/shotgun-picker.state';
 
 @Component({
     selector: 'app-car-seat-drop',
@@ -9,8 +9,8 @@ import { Person } from '../../store/state/shotgun-picker.state';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CarSeatDropComponent {
-    @Input() selected: Person | undefined;
-    @Output() selectedChange = new EventEmitter<Person | undefined>();
+    @Input() selected: Passenger | undefined;
+    @Output() selectedChange = new EventEmitter<Passenger | undefined>();
     @Input() disabled = false;
     @Output() disabledChange = new EventEmitter<boolean>();
     @Input() placeholder?: string | undefined = 'Drag a person here';
@@ -21,12 +21,12 @@ export class CarSeatDropComponent {
         this.disabledChange.emit(!this.disabled);
     }
 
-    onDrop(event: CdkDragDrop<(Person)[]>) {
+    onDrop(event: CdkDragDrop<(Passenger)[]>) {
         this.isDragHovered = false;
 
         if (event.container !== event.previousContainer && !this.disabled) {
-            const newPerson = event.previousContainer.data?.[event.previousIndex];
-            this.selectedChange.emit(newPerson)
+            const newPassenger = event.previousContainer.data?.[event.previousIndex];
+            this.selectedChange.emit(newPassenger)
         }
     }
 

@@ -1,23 +1,25 @@
 import { createAction, props } from "@ngrx/store";
-import { Person, Seat } from "../state/shotgun-picker.state";
+import { Seat } from "../state/shotgun-picker.state";
 
-export const FetchAllPeople = createAction('[Shotgun Picker] Get All People');
-export const FetchAllPeopleSuccess = createAction(
-    '[Shotgun Picker] Get All People Success',
-    props<{ people: Person[] }>(),
+export const InitPassengers = createAction(
+    '[Shotgun Picker] Init passengers',
 );
-export const FetchAllPeopleFailure = createAction(
-    '[Shotgun Picker] Get All People Failure',
-    props<{ errMsg: string }>(),
+export const InitPassengersSuccess = createAction(
+    '[Shotgun Picker] Init passengers success',
+    props<{ personIds: number[]; }>(),
+);
+export const InitPassengersFailure = createAction(
+    '[Shotgun Picker] Init passengers failure',
+    props<{ errMsg: string; }>(),
 );
 
 export const ClearSeats = createAction(
     '[Shotgun Picker] Clear car seats',
 );
 
-export const SetSeatPersonIdSelection = createAction(
-    '[Shotgun Picker] Set personId for seat',
-    props<{ seat: Seat, personId: number | undefined, isSetByUser?: boolean }>(),
+export const SetSeatPassengerIdSelection = createAction(
+    '[Shotgun Picker] Set passengerId for seat',
+    props<{ seat: Seat, passengerId: number | undefined, isSetByUser?: boolean }>(),
 );
 
 export const SetIsSeatDisabled = createAction(

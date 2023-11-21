@@ -2,8 +2,9 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import * as shotgunPickerSelectors from '../../store/selectors/shotgun-picker.selectors';
 import * as shotgunPickerActions from '../../store/actions/shotgun-picker.actions';
-import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
-import { Person, Seat } from '../../store/state/shotgun-picker.state';
+import * as groupActions from 'src/app/group/store/actions/group.actions';
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { Passenger, Seat } from '../../store/state/shotgun-picker.state';
 
 @Component({
     selector: 'app-shotgun-picker',
@@ -15,7 +16,7 @@ export class ShotgunPickerComponent implements OnInit {
     Seat = Seat;
     constructor(private store: Store) { }
 
-    allPeople$ = this.store.select(shotgunPickerSelectors.selectAllPeople);
+    allPassengers$ = this.store.select(shotgunPickerSelectors.selectAllPassengers);
 
     driverSeat$ = this.store.select(shotgunPickerSelectors.selectDriverSeat);
     driverPerson$ = this.store.select(shotgunPickerSelectors.selectDriverPerson);
@@ -42,11 +43,12 @@ export class ShotgunPickerComponent implements OnInit {
     selected = ['Oranges'];
 
     ngOnInit(): void {
-        this.allPeople$.subscribe((person) => {
-            console.log('people: ', person);
+        this.allPassengers$.subscribe((passengers) => {
+            console.log('people: ', passengers);
         })
 
-        this.store.dispatch(shotgunPickerActions.FetchAllPeople());
+        this.store.dispatch(groupActions.FetchAllPeopleForGroup());
+        this.store.dispatch(shotgunPickerActions.InitPassengers());
     }
 
     drop(event: CdkDragDrop<string[]>) {
@@ -73,15 +75,15 @@ export class ShotgunPickerComponent implements OnInit {
         }
     }
 
-    onSeatChange(seat: Seat, newPerson: Person | undefined) {
-        const oldSeat = newPerson?.carSeat?.seat;
+    onSeatChange(seat: Seat, newPassenger: Passenger | undefined) {
+        const oldSeat = newPassenger?.carSeat?.seat;
         if (oldSeat !== undefined) {
-            this.store.dispatch(shotgunPickerActions.SetSeatPersonIdSelection({ seat: oldSeat, personId: undefined }));
+            this.store.dispatch(shotgunPickerActions.SetSeatPassengerIdSelection({ seat: oldSeat, passengerId: undefined }));
         }
         
-        this.store.dispatch(shotgunPickerActions.SetSeatPersonIdSelection({ 
+        this.store.dispatch(shotgunPickerActions.SetSeatPassengerIdSelection({ 
             seat, 
-            personId: newPerson?.id, 
+            passengerId: newPassenger?.id, 
             isSetByUser: true 
         }));
     }
