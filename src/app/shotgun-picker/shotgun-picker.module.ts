@@ -9,7 +9,6 @@ import { shotgunPickerReducer } from './store/reducers/shotgun-picker.reducer';
 import { shotgunPickerFeatureKey } from './store/state/shotgun-picker.state';
 import { CarSeatDropComponent } from './components/car-seat-drop/car-seat-drop.component';
 import { SharedModule } from '../shared/shared.module';
-import { NgMaterialModule } from '../ng-material.module';
 
 @NgModule({
   declarations: [ShotgunPickerComponent, ShotgunPickerIncludeUserComponent, CarSeatDropComponent],

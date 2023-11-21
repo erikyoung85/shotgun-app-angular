@@ -32,6 +32,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { LetDirective, PushPipe } from '@ngrx/component';
 
 @NgModule({
     imports: [
@@ -69,7 +70,9 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
         LayoutModule,
         MatExpansionModule,
         MatSnackBarModule,
-        DragDropModule
+        DragDropModule,
+        LetDirective, 
+        PushPipe, 
     ],
     exports: [
         CdkTreeModule,
@@ -106,7 +109,9 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
         LayoutModule,
         MatExpansionModule,
         MatSnackBarModule,
-        DragDropModule
+        DragDropModule,
+        LetDirective, 
+        PushPipe, 
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
