@@ -11,6 +11,4 @@ export class IconButtonComponent {
 
     @Input() icon!: string;
     @Output() onClick = new EventEmitter<void>();
-
-
 }

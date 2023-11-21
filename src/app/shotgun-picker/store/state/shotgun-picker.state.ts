@@ -12,21 +12,26 @@ export interface Person {
 }
 
 export interface CarSeatsSelection {
-    [Seat.DRIVER]: number | undefined;
-    [Seat.SHOTGUN]: number | undefined;
-    [Seat.LEFT_NUT]: number | undefined;
-    [Seat.MIDDLE]: number | undefined;
-    [Seat.RIGHT_NUT]: number | undefined;
-    [Seat.LEFT_BACK]: number | undefined;
-    [Seat.RIGHT_BACK]: number | undefined;
+    [Seat.DRIVER]: SeatSelection;
+    [Seat.SHOTGUN]: SeatSelection;
+    [Seat.LEFT_NUT]: SeatSelection;
+    [Seat.MIDDLE]: SeatSelection;
+    [Seat.RIGHT_NUT]: SeatSelection;
+    [Seat.LEFT_BACK]: SeatSelection;
+    [Seat.RIGHT_BACK]: SeatSelection;
+}
+
+export interface SeatSelection {
+    personId: number | undefined;
+    isDisabled: boolean;
 }
 
 export enum Seat {
-    DRIVER = 'driver',
-    SHOTGUN = 'shotgun',
-    LEFT_NUT = 'leftNut',
-    MIDDLE = 'middle',
-    RIGHT_NUT = 'rightNut',
-    LEFT_BACK = 'leftBack',
-    RIGHT_BACK = 'rightBack',
+    DRIVER = 'driverSeat',
+    SHOTGUN = 'shotgunSeat',
+    LEFT_NUT = 'leftNutSeat',
+    MIDDLE = 'middleSeat',
+    RIGHT_NUT = 'rightNutSeat',
+    LEFT_BACK = 'leftBackSeat',
+    RIGHT_BACK = 'rightBackSeat',
 }

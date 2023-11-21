@@ -24,12 +24,28 @@ export const shotgunPickerReducer = createReducer(INITIAL_SHOTGUN_PICKER_STATE,
         }
     }),
 
-    on(shotgunPickerActions.SetCarSeatSelection, (state, action): ShotgunPickerState => {
+    on(shotgunPickerActions.SetSeatPersonIdSelection, (state, action): ShotgunPickerState => {
         return {
             ...state,
             carSeatsSelection: {
                 ...state.carSeatsSelection,
-                ...action.selections,
+                [action.seat]: {
+                    ...state.carSeatsSelection[action.seat],
+                    personId: action.personId,
+                }
+            },
+        }
+    }),
+
+    on(shotgunPickerActions.SetIsSeatDisabled, (state, action): ShotgunPickerState => {
+        return {
+            ...state,
+            carSeatsSelection: {
+                ...state.carSeatsSelection,
+                [action.seat]: {
+                    ...state.carSeatsSelection[action.seat],
+                    isDisabled: action.isDisabled,
+                }
             },
         }
     }),

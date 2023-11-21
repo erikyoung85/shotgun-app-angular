@@ -16,13 +16,27 @@ export class ShotgunPickerComponent implements OnInit {
     constructor(private store: Store) { }
 
     allPeople$ = this.store.select(shotgunPickerSelectors.selectAllPeople);
+
+    driverSeat$ = this.store.select(shotgunPickerSelectors.selectDriverSeat);
     driverPerson$ = this.store.select(shotgunPickerSelectors.selectDriverPerson);
+
+    shotgunSeat$ = this.store.select(shotgunPickerSelectors.selectShotgunSeat);
     shotgunPerson$ = this.store.select(shotgunPickerSelectors.selectShotgunPerson);
+
+    leftNutSeat$ = this.store.select(shotgunPickerSelectors.selectLeftNutSeat);
     leftNutPerson$ = this.store.select(shotgunPickerSelectors.selectLeftNutPerson);
+
+    middleSeat$ = this.store.select(shotgunPickerSelectors.selectMiddleSeat);
     middlePerson$ = this.store.select(shotgunPickerSelectors.selectMiddlePerson);
+
+    rightNutSeat$ = this.store.select(shotgunPickerSelectors.selectRightNutSeat);
     rightNutPerson$ = this.store.select(shotgunPickerSelectors.selectRightNutPerson);
-    leftBackPerson$ = this.store.select(shotgunPickerSelectors.selectBackLeftPerson);
-    rightBackPerson$ = this.store.select(shotgunPickerSelectors.selectBackRightPerson);
+
+    leftBackSeat$ = this.store.select(shotgunPickerSelectors.selectLeftBackSeat);
+    leftBackPerson$ = this.store.select(shotgunPickerSelectors.selectLeftBackPerson);
+
+    rightBackSeat$ = this.store.select(shotgunPickerSelectors.selectRightBackSeat);
+    rightBackPerson$ = this.store.select(shotgunPickerSelectors.selectRightBackPerson);
 
     items = ['Carrots', 'Tomatoes', 'Onions', 'Apples', 'Avocados'];
     selected = ['Oranges'];
@@ -52,17 +66,16 @@ export class ShotgunPickerComponent implements OnInit {
     }
 
     onSeatChange(seat: Seat, newPerson: Person | undefined) {
-        console.log('new ' + seat + ': ', newPerson);
-        const selections = {
-            [seat]: newPerson?.id
-        }
-
         const oldSeat = newPerson?.seat;
         if (oldSeat !== undefined) {
-            selections[oldSeat] = undefined;
+            this.store.dispatch(shotgunPickerActions.SetSeatPersonIdSelection({ seat: oldSeat, personId: undefined }));
         }
         
-        this.store.dispatch(shotgunPickerActions.SetCarSeatSelection({ selections}));
+        this.store.dispatch(shotgunPickerActions.SetSeatPersonIdSelection({ seat, personId: newPerson?.id }));
+    }
+
+    onSeatDisableChange(seat: Seat, isDisabled: boolean) {        
+        this.store.dispatch(shotgunPickerActions.SetIsSeatDisabled({ seat, isDisabled }));
     }
 
     ngOnInit(): void {

@@ -11,17 +11,14 @@ import { Person } from '../../store/state/shotgun-picker.state';
 export class CarSeatDropComponent {
     @Input() selected: Person | undefined;
     @Output() selectedChange = new EventEmitter<Person | undefined>();
+    @Input() disabled = false;
+    @Output() disabledChange = new EventEmitter<boolean>();
     @Input() placeholder?: string | undefined = 'Drag a person here';
 
-    disabled = false;
     isDragHovered = false;
 
     onToggleDisabled() {
-        this.disabled = !this.disabled;
-
-        if (this.disabled && this.selected !== undefined) {
-            this.selectedChange.emit(undefined);
-        }
+        this.disabledChange.emit(!this.disabled);
     }
 
     onDrop(event: CdkDragDrop<(Person)[]>) {
