@@ -21,39 +21,42 @@
     <div style="margin-top: 4rem">
         <h2>Car</h2>
   
-        <div fxLayout="row" fxLayoutAlign="center">
-            <app-car-seat-drop
-                [selected]="(driverPerson$ | async) ?? undefined"
-                (selectedChange)="onSeatChange(Seat.DRIVER, $event)"
-            ></app-car-seat-drop>
-            <app-car-seat-drop
-                [selected]="(shotgunPerson$ | async) ?? undefined"
-                (selectedChange)="onSeatChange(Seat.SHOTGUN, $event)"
-            ></app-car-seat-drop>
-        </div>
-        <div fxLayout="row" fxLayoutAlign="center">
-            <app-car-seat-drop
-                [selected]="(leftNutPerson$ | async) ?? undefined"
-                (selectedChange)="onSeatChange(Seat.LEFT_NUT, $event)"
-            ></app-car-seat-drop>
-            <app-car-seat-drop
-                [selected]="(middlePerson$ | async) ?? undefined"
-                (selectedChange)="onSeatChange(Seat.MIDDLE, $event)"
-            ></app-car-seat-drop>
-            <app-car-seat-drop
-                [selected]="(rightNutPerson$ | async) ?? undefined"
-                (selectedChange)="onSeatChange(Seat.RIGHT_NUT, $event)"
-            ></app-car-seat-drop>
-        </div>
-        <div fxLayout="row" fxLayoutAlign="center">
-            <app-car-seat-drop
-                [selected]="(leftBackPerson$ | async) ?? undefined"
-                (selectedChange)="onSeatChange(Seat.LEFT_BACK, $event)"
-            ></app-car-seat-drop>
-            <app-car-seat-drop
-                [selected]="(rightBackPerson$ | async) ?? undefined"
-                (selectedChange)="onSeatChange(Seat.RIGHT_BACK, $event)"
-            ></app-car-seat-drop>
+        <div fxLayout="column" fxLayoutGap="2rem" style="max-width: 400px">
+            <div fxLayout="row" fxLayoutAlign="space-evenly">
+                <app-car-seat-drop
+                    [selected]="(driverPerson$ | async) ?? undefined"
+                    (selectedChange)="onSeatChange(Seat.DRIVER, $event)"
+                    placeholder="Drop Driver Here"
+                ></app-car-seat-drop>
+                <app-car-seat-drop
+                    [selected]="(shotgunPerson$ | async) ?? undefined"
+                    (selectedChange)="onSeatChange(Seat.SHOTGUN, $event)"
+                ></app-car-seat-drop>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="space-evenly">
+                <app-car-seat-drop
+                    [selected]="(leftNutPerson$ | async) ?? undefined"
+                    (selectedChange)="onSeatChange(Seat.LEFT_NUT, $event)"
+                ></app-car-seat-drop>
+                <app-car-seat-drop
+                    [selected]="(middlePerson$ | async) ?? undefined"
+                    (selectedChange)="onSeatChange(Seat.MIDDLE, $event)"
+                ></app-car-seat-drop>
+                <app-car-seat-drop
+                    [selected]="(rightNutPerson$ | async) ?? undefined"
+                    (selectedChange)="onSeatChange(Seat.RIGHT_NUT, $event)"
+                ></app-car-seat-drop>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="space-evenly">
+                <app-car-seat-drop
+                    [selected]="(leftBackPerson$ | async) ?? undefined"
+                    (selectedChange)="onSeatChange(Seat.LEFT_BACK, $event)"
+                ></app-car-seat-drop>
+                <app-car-seat-drop
+                    [selected]="(rightBackPerson$ | async) ?? undefined"
+                    (selectedChange)="onSeatChange(Seat.RIGHT_BACK, $event)"
+                ></app-car-seat-drop>
+            </div>
         </div>
     </div>
 </div>

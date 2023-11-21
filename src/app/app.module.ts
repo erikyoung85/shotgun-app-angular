@@ -5,12 +5,12 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ShotgunPickerModule } from './shotgun-picker/shotgun-picker.module';
 import { HttpClientModule } from '@angular/common/http';
-import { NgMaterialModule } from './ng-material.module';
 import { StoreModule } from '@ngrx/store';
 import { metaReducers } from './meta.reducer';
 import { reducers } from './root.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
     declarations: [
@@ -25,8 +25,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
         AppRoutingModule,
         ShotgunPickerModule,
         HttpClientModule,
-        NgMaterialModule,
-        BrowserAnimationsModule
+        BrowserAnimationsModule,
+        SharedModule,
     ],
     providers: [],
     bootstrap: [AppComponent]

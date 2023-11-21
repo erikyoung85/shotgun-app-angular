@@ -8,11 +8,26 @@
     (cdkDropListExited)="onDragExited()"
 >
     <div 
-        *ngIf="selected === undefined"
+        *ngIf="disabled"
+        class="seat-disabled"
+    >
+        <icon-button 
+            class="icon-button"
+            icon="visibility_off"
+            (onClick)="onToggleDisabled()"
+        ></icon-button>
+    </div>
+    <div 
+        *ngIf="selected === undefined && !disabled"
         class="seat-empty"
     >
+        <icon-button 
+            class="icon-button"
+            icon="visibility"
+            (onClick)="onToggleDisabled()"
+        ></icon-button>
         <div class="seat-text">
-            Drag a person here
+            {{placeholder}}
         </div>
     </div>
     <div 

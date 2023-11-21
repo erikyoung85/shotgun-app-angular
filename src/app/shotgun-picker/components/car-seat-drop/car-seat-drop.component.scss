@@ -13,6 +13,7 @@
 }
 
 .seat {
+    position: relative;
     box-sizing: border-box;
     height: 100%;
     width: 100%;
@@ -20,6 +21,14 @@
     border: 1px solid black;
     border-radius: 4px;
     padding: 4px;
+
+    .icon-button {
+        z-index: 1;
+        cursor: pointer;
+        position: absolute;
+        top: 4px;
+        right: 8px;
+    }
 
     .seat-text {
         box-sizing: border-box;
@@ -46,13 +55,29 @@
         border: 1px dashed grey;
     }
 }
+.seat-disabled {
+    @extend .seat;
+    background: slategrey;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 
-.drag-hovered-seat {
-    height: 100%;
-    width: 100%;
-    background: grey;
-}
-
-.cdk-drag-placeholder {
-    background: blue;
+    &::before,
+    &::after {
+        position: absolute;
+        content: '';
+        width: 100%;
+        height: 1px; /* cross thickness */
+        background-color: red;
+    }
+    
+    &::before {
+        transform: rotate(45deg);
+    }
+    
+    &::after {
+        transform: rotate(-45deg);
+    }
 }
