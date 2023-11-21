@@ -6,17 +6,26 @@ export const selectShotgunPickerState = createFeatureSelector<ShotgunPickerState
 export const selectCarSeatsSelection = createSelector(selectShotgunPickerState, (state) => {
     return state.carSeatsSelection
 });
-export const selectAllPeople = createSelector(selectShotgunPickerState, (state): Person[] => {
+
+export const selectAllCarSeats = createSelector(selectCarSeatsSelection, (carSeatsSelection) => {
+    return Object.values(Seat).map(carSeat => carSeatsSelection[carSeat]);
+});
+export const selectAllPeople = createSelector(selectShotgunPickerState, selectAllCarSeats, (state, allCarSeats): Person[] => {
     return state.allPeople.map(person => {
-        const currSeat = Object.keys(state.carSeatsSelection).find(
-            (seat) => state.carSeatsSelection[seat as Seat].personId === person.id
-        );
+        const currSeat = allCarSeats.find((carSeat) => carSeat.personId === person.id);
         
-        return {
+        return <Person>{
             ...person,
-            seat: currSeat as Seat,
+            carSeat: currSeat,
         }
     })
+});
+
+export const selectAvailablePeople = createSelector(selectAllPeople, (allPeople) => {
+    return allPeople.filter(person => person.carSeat === undefined);
+});
+export const selectAvailableSeats = createSelector(selectAllCarSeats, (allCarSeats) => {
+    return allCarSeats.filter(carSeat => carSeat.personId === undefined && !carSeat.isDisabled);
 });
 
 export const selectPersonDict = createSelector(selectAllPeople, (allPeople) => {
@@ -31,7 +40,7 @@ export const selectDriverSeat = createSelector(selectCarSeatsSelection,
     (carSeatsSelection) => carSeatsSelection[Seat.DRIVER]
 );
 export const selectDriverPersonId = createSelector(selectDriverSeat,
-    (seat) => seat.personId
+    (carSeat) => carSeat.personId
 );
 export const selectDriverPerson = createSelector(
     selectPersonDict, 
@@ -45,7 +54,7 @@ export const selectShotgunSeat = createSelector(selectCarSeatsSelection,
     (carSeatsSelection) => carSeatsSelection[Seat.SHOTGUN]
 );
 export const selectShotgunPersonId = createSelector(selectShotgunSeat,
-    (seat) => seat.personId
+    (carSeat) => carSeat.personId
 );
 export const selectShotgunPerson = createSelector(
     selectPersonDict, 
@@ -59,7 +68,7 @@ export const selectLeftNutSeat = createSelector(selectCarSeatsSelection,
     (carSeatsSelection) => carSeatsSelection[Seat.LEFT_NUT]
 );
 export const selectLeftNutPersonId = createSelector(selectLeftNutSeat,
-    (seat) => seat.personId
+    (carSeat) => carSeat.personId
 );
 export const selectLeftNutPerson = createSelector(
     selectPersonDict, 
@@ -73,7 +82,7 @@ export const selectMiddleSeat = createSelector(selectCarSeatsSelection,
     (carSeatsSelection) => carSeatsSelection[Seat.MIDDLE]
 );
 export const selectMiddlePersonId = createSelector(selectMiddleSeat,
-    (seat) => seat.personId
+    (carSeat) => carSeat.personId
 );
 export const selectMiddlePerson = createSelector(
     selectPersonDict, 
@@ -87,7 +96,7 @@ export const selectRightNutSeat = createSelector(selectCarSeatsSelection,
     (carSeatsSelection) => carSeatsSelection[Seat.RIGHT_NUT]
 );
 export const selectRightNutPersonId = createSelector(selectRightNutSeat,
-    (seat) => seat.personId
+    (carSeat) => carSeat.personId
 );
 export const selectRightNutPerson = createSelector(
     selectPersonDict, 
@@ -101,7 +110,7 @@ export const selectLeftBackSeat = createSelector(selectCarSeatsSelection,
     (carSeatsSelection) => carSeatsSelection[Seat.LEFT_BACK]
 );
 export const selectLeftBackPersonId = createSelector(selectLeftBackSeat,
-    (seat) => seat.personId
+    (carSeat) => carSeat.personId
 );
 export const selectLeftBackPerson = createSelector(
     selectPersonDict, 
@@ -115,7 +124,7 @@ export const selectRightBackSeat = createSelector(selectCarSeatsSelection,
     (carSeatsSelection) => carSeatsSelection[Seat.RIGHT_BACK]
 );
 export const selectRightBackPersonId = createSelector(selectRightBackSeat,
-    (seat) => seat.personId
+    (carSeat) => carSeat.personId
 );
 export const selectRightBackPerson = createSelector(
     selectPersonDict, 

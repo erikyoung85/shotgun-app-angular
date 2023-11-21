@@ -18,8 +18,12 @@
         </div>
     </div>
   
-    <div style="margin-top: 4rem">
-        <h2>Car</h2>
+    <h2 style="margin-top: 4rem">Car</h2>
+    <div fxLayout="column" fxLayoutGap="1rem">
+        <div fxLayout="row" fxLayoutGap=".5rem">
+            <button mat-raised-button color="primary" (click)="onPickSeats()">Pick Seats</button>
+            <button mat-raised-button (click)="onClearSeats()">Clear</button>
+        </div>
   
         <div fxLayout="column" fxLayoutGap="2rem" style="max-width: 400px">
             <div fxLayout="row" fxLayoutAlign="space-evenly">

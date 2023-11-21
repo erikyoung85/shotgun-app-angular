@@ -1,5 +1,5 @@
 import { createAction, props } from "@ngrx/store";
-import { CarSeatsSelection, Person, Seat } from "../state/shotgun-picker.state";
+import { Person, Seat } from "../state/shotgun-picker.state";
 
 export const FetchAllPeople = createAction('[Shotgun Picker] Get All People');
 export const FetchAllPeopleSuccess = createAction(
@@ -11,10 +11,15 @@ export const FetchAllPeopleFailure = createAction(
     props<{ errMsg: string }>(),
 );
 
+export const ClearSeats = createAction(
+    '[Shotgun Picker] Clear car seats',
+);
+
 export const SetSeatPersonIdSelection = createAction(
     '[Shotgun Picker] Set personId for seat',
-    props<{ seat: Seat, personId: number | undefined }>(),
+    props<{ seat: Seat, personId: number | undefined, isSetByUser?: boolean }>(),
 );
+
 export const SetIsSeatDisabled = createAction(
     '[Shotgun Picker] Set seat is disabled',
     props<{ seat: Seat, isDisabled: boolean }>(),
@@ -22,4 +27,5 @@ export const SetIsSeatDisabled = createAction(
 
 export const RandomPickSeatsForPeople = createAction(
     '[Shotgun Picker] Randomly pick seats for people',
+    props<{ clearRandomSelections: boolean }>(),
 );

@@ -44,10 +44,16 @@
         justify-content: center;
     }
 }
+
 .seat-filled {
     @extend .seat;
-    background: green;
+    background: lightgreen;
+
+    &.user-filled {
+        border: 4px solid darkgreen;
+    }
 }
+
 .seat-empty {
     @extend .seat;
     background: lightgrey;
@@ -55,6 +61,7 @@
         border: 1px dashed grey;
     }
 }
+
 .seat-disabled {
     @extend .seat;
     background: slategrey;

@@ -41,6 +41,14 @@ export class ShotgunPickerComponent implements OnInit {
     items = ['Carrots', 'Tomatoes', 'Onions', 'Apples', 'Avocados'];
     selected = ['Oranges'];
 
+    ngOnInit(): void {
+        this.allPeople$.subscribe((person) => {
+            console.log('people: ', person);
+        })
+
+        this.store.dispatch(shotgunPickerActions.FetchAllPeople());
+    }
+
     drop(event: CdkDragDrop<string[]>) {
         if (event.previousContainer === event.container) {
             moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
@@ -66,23 +74,28 @@ export class ShotgunPickerComponent implements OnInit {
     }
 
     onSeatChange(seat: Seat, newPerson: Person | undefined) {
-        const oldSeat = newPerson?.seat;
+        const oldSeat = newPerson?.carSeat?.seat;
         if (oldSeat !== undefined) {
             this.store.dispatch(shotgunPickerActions.SetSeatPersonIdSelection({ seat: oldSeat, personId: undefined }));
         }
         
-        this.store.dispatch(shotgunPickerActions.SetSeatPersonIdSelection({ seat, personId: newPerson?.id }));
+        this.store.dispatch(shotgunPickerActions.SetSeatPersonIdSelection({ 
+            seat, 
+            personId: newPerson?.id, 
+            isSetByUser: true 
+        }));
     }
 
     onSeatDisableChange(seat: Seat, isDisabled: boolean) {        
         this.store.dispatch(shotgunPickerActions.SetIsSeatDisabled({ seat, isDisabled }));
     }
 
-    ngOnInit(): void {
-        this.allPeople$.subscribe((person) => {
-            console.log('people: ', person);
-        })
+    onPickSeats() {
+        this.store.dispatch(shotgunPickerActions.RandomPickSeatsForPeople({ clearRandomSelections: true }));
+    }
 
-        this.store.dispatch(shotgunPickerActions.FetchAllPeople());
+    onClearSeats() {
+        this.store.dispatch(shotgunPickerActions.ClearSeats());
+
     }
 }

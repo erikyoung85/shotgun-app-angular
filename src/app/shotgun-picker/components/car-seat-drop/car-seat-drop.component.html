@@ -33,6 +33,7 @@
     <div 
         *ngIf="selected !== undefined"
         class="seat-filled" 
+        [class.user-filled]="selected.carSeat?.isSetByUser"
         cdkDrag 
         cdkDragBoundary=".drag-container"
     >
