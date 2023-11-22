@@ -12,7 +12,7 @@ import { Person } from 'src/app/group/store/state/group.state';
 export class GroupTableComponent implements OnInit {
     constructor(private store: Store) {}
 
-    displayedColumns = ['id', 'name', 'isInCar'];
+    displayedColumns = ['id', 'name', 'isInCar', 'delete'];
 
     allPeople$ = this.store.select(groupSelectors.selectAllPeople);
 
@@ -25,5 +25,9 @@ export class GroupTableComponent implements OnInit {
 
     onAddNewPerson() {
         console.log('add new person');
+    }
+
+    onDeletePerson(person: Person) {
+        console.log('delete person: ', person);
     }
 }

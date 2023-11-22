@@ -20,6 +20,15 @@
         </mat-cell>
     </ng-container>
 
+    <ng-container matColumnDef="delete">
+        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+        <mat-cell *matCellDef="let element">
+            <button mat-icon-button (click)="onDeletePerson(element)">
+                <mat-icon fontIcon="delete"></mat-icon>
+            </button>
+        </mat-cell>
+    </ng-container>
+
     <ng-container matColumnDef="addNew">
         <mat-footer-cell *matFooterCellDef>
             <div fxLayout="row" fxLayoutAlign="flex-start center" fxLayoutGap="1rem">
