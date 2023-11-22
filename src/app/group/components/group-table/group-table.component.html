@@ -1,5 +1,4 @@
-<mat-table [dataSource]="allPeople$" class="mat-elevation-z8">
-
+<mat-table [dataSource]="allPeople$">
     <ng-container matColumnDef="id">
         <mat-header-cell *matHeaderCellDef>Id</mat-header-cell>
         <mat-cell *matCellDef="let element">{{element.id}}</mat-cell>
@@ -10,17 +9,27 @@
         <mat-cell *matCellDef="let element">{{element.name}}</mat-cell>
     </ng-container>
     
-    <ng-container matColumnDef="include">
-        <mat-header-cell *matHeaderCellDef>Include</mat-header-cell>
+    <ng-container matColumnDef="isInCar">
+        <mat-header-cell *matHeaderCellDef>In Car</mat-header-cell>
         <mat-cell *matCellDef="let element">
             <mat-checkbox 
                 (click)="$event.stopPropagation()"
                 (change)="onToggleRow(element)"
-                [checked]="false">
+                [checked]="element.isInCar">
             </mat-checkbox>
         </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="addNew">
+        <mat-footer-cell *matFooterCellDef>
+            <div fxLayout="row" fxLayoutAlign="flex-start center" fxLayoutGap="1rem">
+                <mat-icon fontIcon="add_circle"></mat-icon>
+                <span>Add New</span>
+            </div>
+        </mat-footer-cell>
     </ng-container>
     
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    <mat-footer-row matRipple *matFooterRowDef="['addNew']" (click)="onAddNewPerson()"></mat-footer-row>
 </mat-table>

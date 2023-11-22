@@ -8,17 +8,18 @@ import { shotgunPickerReducer } from './store/reducers/shotgun-picker.reducer';
 import { shotgunPickerFeatureKey } from './store/state/shotgun-picker.state';
 import { CarSeatDropComponent } from './components/car-seat-drop/car-seat-drop.component';
 import { SharedModule } from '../shared/shared.module';
-import { ChoosePassengersComponent } from './components/choose-passengers/choose-passengers.component';
 import { ShotgunPickerContainerComponent } from './components/shotgun-picker-container/shotgun-picker-container.component';
+import { GroupModule } from '../group/group.module';
 
 @NgModule({
-  declarations: [ShotgunPickerComponent, CarSeatDropComponent, ChoosePassengersComponent, ShotgunPickerContainerComponent],
+  declarations: [ShotgunPickerComponent, CarSeatDropComponent, ShotgunPickerContainerComponent],
   exports: [ShotgunPickerComponent, ShotgunPickerContainerComponent],
   imports: [
     CommonModule,
     SharedModule,
     StoreModule.forFeature(shotgunPickerFeatureKey, shotgunPickerReducer),
     EffectsModule.forFeature([ShotgunPickerEffects]),
+    GroupModule,
   ],
 })
 export class ShotgunPickerModule { }

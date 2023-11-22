@@ -10,3 +10,8 @@ export const FetchAllPeopleFailure = createAction(
     '[Group] Get All People Failure',
     props<{ errMsg: string }>(),
 );
+
+export const SetIsPersonInCar = createAction(
+    '[Group] Set is person in car',
+    props<{ personId: number, isInCar: boolean }>(),
+);

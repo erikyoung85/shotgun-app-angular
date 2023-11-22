@@ -23,4 +23,19 @@ export const groupReducer = createReducer(INITIAL_GROUP_STATE,
             allPeople: [],
         }
     }),
+
+    on(groupActions.SetIsPersonInCar, (state, action): GroupState => {
+        const personIdx = state.allPeople.findIndex(person => person.id === action.personId);
+
+        const allPeople = [...state.allPeople];
+        allPeople[personIdx] = {
+            ...allPeople[personIdx],
+            isInCar: action.isInCar,
+        };
+
+        return {
+            ...state,
+            allPeople: allPeople,
+        }
+    }),
 )

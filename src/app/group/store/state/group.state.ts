@@ -11,4 +11,5 @@ export interface Person {
     groupId: number;
     id: number;
     name: string;
+    isInCar: boolean;
 }
