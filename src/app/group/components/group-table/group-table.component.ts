@@ -47,7 +47,7 @@ export class GroupTableComponent implements OnInit {
 
         dialogRef.componentInstance.confirmation.subscribe((confirmation: boolean) => {
             if (confirmation) {
-                console.log('delete person: ', person);
+                this.store.dispatch(groupActions.DeletePersonFromGroup({ personId: person.id }));
             }
 
             dialogRef.close();
