@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { Person, GroupId } from '../store/state/group.state';
-import { Params } from '@angular/router';
+import { Observable, map } from 'rxjs';
+import { Group, Person } from '../store/state/group.state';
+import { GetGroupResponseDtoV1 } from '../models/GroupResponseDtoV1.interface';
 
 @Injectable({
     providedIn: 'root'
@@ -11,11 +11,56 @@ export class GroupService {
 
     constructor(private http: HttpClient) { }
 
-    getAllPeopleForGroup(groupId: GroupId): Observable<Person[]> {
-        const url = `/api/group/allPeople`;
-        const params: Params = {
-            groupId: groupId
+    getGroup(groupId: number): Observable<Group> {
+        const url = `/api/group/getGroup`;
+        const params = {
+            groupId: groupId,
         }
-        return this.http.get<Person[]>(url, { params });
+        return this.http.post<GetGroupResponseDtoV1>(url, { params }).pipe(
+            map(res => {
+                const personDict: { [personId: number]: Person } = {};
+                res.people.forEach(personDto => {
+                    personDict[personDto.id] = {
+                        id: personDto.id,
+                        name: personDto.name,
+                        groupId: personDto.groupId,
+                        isInCar: false,
+                    };
+                });
+
+                return {
+                    id: res.id,
+                    name: res.name,
+                    personDict: personDict,
+                }
+            })
+        );
+    }
+
+    setGroupName(groupId: number, groupName: string): Observable<boolean> {
+        const url = `/api/group/setGroupName`;
+        const body = {
+            groupId: groupId,
+            groupName
+        }
+        return this.http.post<boolean>(url, { body });
+    }
+
+    addPersonToGroup(groupId: number, personName: string): Observable<Person> {
+        const url = `/api/group/addPerson`;
+        const body = {
+            groupId: groupId,
+            personName: personName,
+        }
+        return this.http.post<Person>(url, { body });
+    }
+
+    deletePersonFromGroup(groupId: number, personId: number): Observable<boolean> {
+        const url = `/api/group/deletePerson`;
+        const body = {
+            groupId: groupId,
+            personId: personId,
+        }
+        return this.http.post<boolean>(url, { body });
     }
 }

@@ -5,37 +5,62 @@ import { GroupState } from "../state/group.state";
 
 
 export const groupReducer = createReducer(INITIAL_GROUP_STATE,
-    on(groupActions.FetchAllPeopleFailure, (state): GroupState => {
+    on(groupActions.FetchGroup, (state, action): GroupState => {
+
         return {
             ...state,
-            allPeople: [],
+            group: undefined
         }
     }),
-    on(groupActions.FetchAllPeopleSuccess, (state, action): GroupState => {
+    on(groupActions.FetchGroupSuccess, (state, action): GroupState => {
         return {
             ...state,
-            allPeople: action.people,
+            group: action.group
         }
     }),
-    on(groupActions.FetchAllPeopleFailure, (state): GroupState => {
+    on(groupActions.FetchGroupFailure, (state): GroupState => {
         return {
             ...state,
-            allPeople: [],
+            group: undefined
+        }
+    }),
+
+    on(groupActions.AddPersonToGroupSuccess, (state, action): GroupState => {
+        return {
+            ...state,
+            group: state.group && {
+                ...state.group,
+                personDict: {
+                    ...state.group.personDict,
+                    [action.person.id]: action.person,
+                }
+            }
+        }
+    }),
+
+    on(groupActions.DeletePersonFromGroupSuccess, (state, action): GroupState => {
+        return {
+            ...state,
+            group: state.group && {
+                ...state.group,
+                personDict: action.personDict,
+            }
         }
     }),
 
     on(groupActions.SetIsPersonInCar, (state, action): GroupState => {
-        const personIdx = state.allPeople.findIndex(person => person.id === action.personId);
-
-        const allPeople = [...state.allPeople];
-        allPeople[personIdx] = {
-            ...allPeople[personIdx],
-            isInCar: action.isInCar,
-        };
-
         return {
             ...state,
-            allPeople: allPeople,
+            group: state.group && {
+                ...state.group,
+                personDict: {
+                    ...state.group.personDict,
+                    [action.personId]: {
+                        ...state.group.personDict[action.personId],
+                        isInCar: action.isInCar,
+                    }
+                }
+            }
         }
     }),
 )

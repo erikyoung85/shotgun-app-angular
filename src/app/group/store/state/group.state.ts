@@ -1,10 +1,15 @@
 export const groupFeatureKey = 'groupState';
 
-export type GroupId = string;
-
 export interface GroupState {
-    groupId: GroupId;
-    allPeople: Person[];
+    group: Group | undefined;
+}
+
+export interface Group {
+    id: number;
+    name: string;
+    personDict: {
+        [personId: number]: Person
+    };
 }
 
 export interface Person {

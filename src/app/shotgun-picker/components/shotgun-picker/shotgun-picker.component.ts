@@ -47,7 +47,7 @@ export class ShotgunPickerComponent implements OnInit {
             console.log('people: ', passengers);
         })
 
-        this.store.dispatch(groupActions.FetchAllPeopleForGroup());
+        this.store.dispatch(groupActions.FetchGroup({ groupId: 0 }));
         this.store.dispatch(shotgunPickerActions.InitPassengers());
     }
 

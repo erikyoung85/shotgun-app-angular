@@ -1,0 +1,29 @@
+<div class="main-save-dialog-container">
+    <mat-dialog-content>
+        <div class="app-modal bg-primary-lighter-grey">
+            <p>
+                Are you sure you want to delete? <br/><br/>
+                You will lose all data associated with this person.
+            </p>
+        </div>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+        <button
+            mat-raised-button
+            mat-dialog-close
+            color="primary"
+            class="font-bold font-sm button-radius-padding form-button-margin-right"
+            (click)="onCancelClick()"
+        >
+            Cancel
+        </button>
+
+        <button
+            mat-stroked-button
+            class="font-bold font-sm bg-primary-darker-grey white button-radius-padding"
+            (click)="onDeleteClick()"
+        >
+            Delete
+        </button>
+    </mat-dialog-actions>
+</div>

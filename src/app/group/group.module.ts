@@ -8,9 +8,11 @@ import { GroupEffects } from './store/effects/group.effects';
 import { groupReducer } from './store/reducers/group.reducer';
 import { GroupTableComponent } from './components/group-table/group-table.component';
 import { GroupContainerComponent } from './components/group-container/group-container.component';
+import { EditGroupNameComponent } from './components/edit-group-name/edit-group-name.component';
+import { AddPersonComponent } from './components/add-person/add-person.component';
 
 @NgModule({
-  declarations: [GroupTableComponent, GroupContainerComponent],
+  declarations: [GroupTableComponent, GroupContainerComponent, EditGroupNameComponent, AddPersonComponent],
   exports: [GroupTableComponent, GroupContainerComponent],
   imports: [
     CommonModule,

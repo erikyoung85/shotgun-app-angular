@@ -1,0 +1,32 @@
+<div class="main-save-dialog-container">
+    <mat-dialog-content>
+        <div class="app-modal bg-primary-lighter-grey">
+            <p>
+                Enter a name for the new person
+            </p>
+
+            <mat-form-field>
+                <input matInput placeholder="Person Name" [formControl]="formControl">
+            </mat-form-field>
+        </div>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+        <button
+            mat-stroked-button
+            mat-dialog-close
+            class="font-bold font-sm button-radius-padding form-button-margin-right"
+            (click)="onCancelClick()"
+        >
+            Cancel
+        </button>
+
+        <button
+            mat-raised-button
+            color="primary"
+            class="font-bold font-sm bg-primary-darker-grey white button-radius-padding"
+            (click)="onAddClick()"
+        >
+            Add
+        </button>
+    </mat-dialog-actions>
+</div>
