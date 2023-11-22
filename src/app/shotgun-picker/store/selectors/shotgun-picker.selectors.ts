@@ -16,13 +16,10 @@ export const selectAllCarSeats = createSelector(selectCarSeatsSelection, (carSea
 });
 
 export const selectAllPassengers = createSelector(
-    groupSelectors.selectPersonDict,
-    selectSelectedPersonIds, 
+    groupSelectors.selectAllPeople,
     selectAllCarSeats, 
-    (personDict, selectedPersonIds, allCarSeats): Passenger[] => {
-        const selectedPeople = selectedPersonIds.map(personId => 
-            personDict[personId]
-        ).filter(person => person !== undefined);
+    (allPeople, allCarSeats): Passenger[] => {
+        const selectedPeople = allPeople.filter(person => person.isInCar)
 
         return selectedPeople.map(person => {
             const currSeat = allCarSeats.find((carSeat) => carSeat.passengerId === person.id);
