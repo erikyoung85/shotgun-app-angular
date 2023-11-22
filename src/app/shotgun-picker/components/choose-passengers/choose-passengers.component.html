@@ -1,4 +1,4 @@
-<mat-table [dataSource]="allPassengers$" class="mat-elevation-z8">
+<mat-table [dataSource]="allPeople$" class="mat-elevation-z8">
 
     <ng-container matColumnDef="id">
         <mat-header-cell *matHeaderCellDef>Id</mat-header-cell>
@@ -10,8 +10,8 @@
         <mat-cell *matCellDef="let element">{{element.name}}</mat-cell>
     </ng-container>
     
-    <ng-container matColumnDef="isInCar">
-        <mat-header-cell *matHeaderCellDef>In Car</mat-header-cell>
+    <ng-container matColumnDef="include">
+        <mat-header-cell *matHeaderCellDef>Include</mat-header-cell>
         <mat-cell *matCellDef="let element">
             <mat-checkbox 
                 (click)="$event.stopPropagation()"
