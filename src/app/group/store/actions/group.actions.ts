@@ -40,6 +40,19 @@ export const DeletePersonFromGroupFailure = createAction(
     props<{ errMsg: string }>(),
 );
 
+export const SetGroupName = createAction(
+    '[Group] Set group name',
+    props<{ name: string }>(),
+);
+export const SetGroupNameSuccess = createAction(
+    '[Group] Set group name Success',
+    props<{ name: string }>(),
+);
+export const SetGroupNameFailure = createAction(
+    '[Group] Set group name Failure',
+    props<{ errMsg: string }>(),
+);
+
 export const SetIsPersonInCar = createAction(
     '[Group] Set is person in car',
     props<{ personId: number, isInCar: boolean }>(),

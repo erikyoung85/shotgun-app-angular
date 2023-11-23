@@ -3,7 +3,7 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { EditGroupNameComponent } from '../edit-group-name/edit-group-name.component';
 import * as groupSelectors from 'src/app/group/store/selectors/group.selectors';
-
+import * as groupActions from 'src/app/group/store/actions/group.actions';
 
 @Component({
     selector: 'app-group-container',
@@ -25,9 +25,9 @@ export class GroupContainerComponent implements OnInit {
         let dialogRef: MatDialogRef<EditGroupNameComponent, any>;
         dialogRef = this.matDialog.open(EditGroupNameComponent);
 
-        dialogRef.componentInstance.newGroupName.subscribe((newGroupName: boolean) => {
+        dialogRef.componentInstance.newGroupName.subscribe((newGroupName) => {
             if (newGroupName !== null) {
-                console.log('new group name: ', newGroupName);
+                this.store.dispatch(groupActions.SetGroupName({ name: newGroupName }));
             }
 
             dialogRef.close();

@@ -37,13 +37,15 @@ export class GroupService {
         );
     }
 
-    setGroupName(groupId: number, groupName: string): Observable<boolean> {
-        const url = `/api/group/setGroupName`;
+    setGroupName(groupId: number, groupName: string): Observable<string> {
+        const url = `/api/group/editGroup`;
         const body = {
             groupId: groupId,
-            groupName
+            groupName: groupName
         }
-        return this.http.post<boolean>(url, { body });
+        return this.http.post<{ name: string }>(url, { body }).pipe(
+            map(res => res.name)
+        );
     }
 
     addPersonToGroup(groupId: number, personName: string): Observable<Person> {

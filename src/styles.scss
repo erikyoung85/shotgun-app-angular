@@ -7,8 +7,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 /** Tab Group to switch entire mobile screen
 */
 mat-tab-group.common-layout-tabs {
-    width: 100vw;
-    height: 100vh;
+    height: 100%;
 
     .mat-mdc-tab-body-wrapper {
         flex: 1;

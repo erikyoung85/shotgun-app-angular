@@ -18,12 +18,6 @@ export const groupReducer = createReducer(INITIAL_GROUP_STATE,
             group: action.group
         }
     }),
-    on(groupActions.FetchGroupFailure, (state): GroupState => {
-        return {
-            ...state,
-            group: undefined
-        }
-    }),
 
     on(groupActions.AddPersonToGroupSuccess, (state, action): GroupState => {
         return {
@@ -44,6 +38,16 @@ export const groupReducer = createReducer(INITIAL_GROUP_STATE,
             group: state.group && {
                 ...state.group,
                 personDict: action.personDict,
+            }
+        }
+    }),
+
+    on(groupActions.SetGroupNameSuccess, (state, action): GroupState => {
+        return {
+            ...state,
+            group: state.group && {
+                ...state.group,
+                name: action.name,
             }
         }
     }),

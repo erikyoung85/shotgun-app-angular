@@ -23,6 +23,23 @@ export class GroupEffects {
         ),
     )
 
+    deletePersonFromGroup$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(groupActions.DeletePersonFromGroup),
+            concatLatestFrom(() => this.store.select(groupSelectors.selectGroup).pipe(isNotNil())),
+            switchMap(([action, group]) => {
+                return this.groupService.deletePersonFromGroup(group.id, action.personId).pipe(
+                    map(() => {
+                        const newPersonDict = { ...group.personDict };
+                        delete newPersonDict[action.personId];
+                        return groupActions.DeletePersonFromGroupSuccess({ personDict: newPersonDict })
+                    }),
+                    catchError((errMsg) => of(groupActions.DeletePersonFromGroupFailure({ errMsg })))
+                )
+            })
+        ),
+    )
+
     addPersonToGroup$ = createEffect(() =>
         this.actions$.pipe(
             ofType(groupActions.AddPersonToGroup),
@@ -36,18 +53,14 @@ export class GroupEffects {
         ),
     )
 
-    deletePersonFromGroup$ = createEffect(() =>
+    setGroupName$ = createEffect(() =>
         this.actions$.pipe(
-            ofType(groupActions.DeletePersonFromGroup),
+            ofType(groupActions.SetGroupName),
             concatLatestFrom(() => this.store.select(groupSelectors.selectGroup).pipe(isNotNil())),
             switchMap(([action, group]) => {
-                return this.groupService.deletePersonFromGroup(group.id, action.personId).pipe(
-                    map(() => {
-                        const newPersonDict = { ...group.personDict };
-                        delete newPersonDict[action.personId];
-                        return groupActions.DeletePersonFromGroupSuccess({ personDict: newPersonDict })
-                    }),
-                    catchError((errMsg) => of(groupActions.DeletePersonFromGroupFailure({ errMsg })))
+                return this.groupService.setGroupName(group.id, action.name).pipe(
+                    map((name) => groupActions.SetGroupNameSuccess({ name })),
+                    catchError((errMsg) => of(groupActions.SetGroupNameFailure({ errMsg })))
                 )
             })
         ),
