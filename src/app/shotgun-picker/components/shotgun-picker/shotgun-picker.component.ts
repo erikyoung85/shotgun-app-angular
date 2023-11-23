@@ -45,7 +45,6 @@ export class ShotgunPickerComponent implements OnInit {
     }
 
     onDropToRemove(event: CdkDragDrop<Passenger[] | null>) {
-        debugger;
         const oldSeat = event.previousContainer.data?.[event.previousIndex]?.carSeat?.seat;
         if (oldSeat !== undefined) {
             this.store.dispatch(shotgunPickerActions.SetSeatPassengerIdSelection({ seat: oldSeat, passengerId: undefined }));

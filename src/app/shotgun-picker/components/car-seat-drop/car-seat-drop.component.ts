@@ -31,12 +31,10 @@ export class CarSeatDropComponent {
     }
 
     onDragEntered() {
-        console.log('drag entered');
         this.isDragHovered = true;
     }
 
     onDragExited() {
-        console.log('drag exited');
         this.isDragHovered = false;
     }
 }

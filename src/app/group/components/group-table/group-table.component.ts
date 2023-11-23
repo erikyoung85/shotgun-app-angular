@@ -32,7 +32,6 @@ export class GroupTableComponent implements OnInit {
 
         dialogRef.componentInstance.newPersonName.subscribe((newPersonName: string) => {
             if (newPersonName !== null) {
-                console.log('new person name: ', newPersonName);
                 this.store.dispatch(groupActions.AddPersonToGroup({ personName: newPersonName }));
             }
 
