@@ -1,4 +1,10 @@
-<div cdkDropListGroup class="drag-container" style="padding: 1rem">
+<div 
+    class="drag-container"
+    style="padding: 1rem"
+    cdkDropListGroup
+    fxLayout="column"
+    fxLayoutGap="1rem"
+>
     <div
         class="drag-list-horizontal"
         cdkDropList
@@ -18,69 +24,66 @@
         </div>
     </div>
   
-    <h2 style="margin-top: 4rem">Car</h2>
-    <div fxLayout="column" fxLayoutGap="1rem">
-        <div fxLayout="row" fxLayoutGap=".5rem">
-            <button mat-raised-button color="primary" (click)="onPickSeats()">Pick Seats</button>
-            <button mat-raised-button (click)="onClearSeats()">Clear</button>
-        </div>
+    <div fxLayout="row" fxLayoutGap=".5rem">
+        <button mat-raised-button color="primary" (click)="onPickSeats()">Pick Seats</button>
+        <button mat-raised-button (click)="onClearSeats()">Clear</button>
+    </div>
   
-        <div fxLayout="column" fxLayoutGap="2rem" style="max-width: 400px">
-            <div fxLayout="row" fxLayoutAlign="space-evenly">
-                <app-car-seat-drop
-                    [selected]="driverPerson$ | ngrxPush"
-                    (selectedChange)="onSeatChange(Seat.DRIVER, $event)"
-                    [disabled]="(driverSeat$ | ngrxPush)?.isDisabled ?? false"
-                    (disabledChange)="onSeatDisableChange(Seat.DRIVER, $event)"
-                    placeholder="Drop Driver Here"
-                ></app-car-seat-drop>
-                <app-car-seat-drop
-                    [selected]="shotgunPerson$ | ngrxPush"
-                    (selectedChange)="onSeatChange(Seat.SHOTGUN, $event)"
-                    [disabled]="(shotgunSeat$ | ngrxPush)?.isDisabled ?? false"
-                    (disabledChange)="onSeatDisableChange(Seat.SHOTGUN, $event)"
-                    placeholder="Shotgun"
-                ></app-car-seat-drop>
-            </div>
-            <div fxLayout="row" fxLayoutAlign="space-evenly">
-                <app-car-seat-drop
-                    [selected]="leftNutPerson$ | ngrxPush"
-                    (selectedChange)="onSeatChange(Seat.LEFT_NUT, $event)"
-                    [disabled]="(leftNutSeat$ | ngrxPush)?.isDisabled ?? false"
-                    (disabledChange)="onSeatDisableChange(Seat.LEFT_NUT, $event)"
-                    placeholder="Left Nut"
-                ></app-car-seat-drop>
-                <app-car-seat-drop
-                    [selected]="middlePerson$ | ngrxPush"
-                    (selectedChange)="onSeatChange(Seat.MIDDLE, $event)"
-                    [disabled]="(middleSeat$ | ngrxPush)?.isDisabled ?? false"
-                    (disabledChange)="onSeatDisableChange(Seat.MIDDLE, $event)"
-                    placeholder="Middle"
-                ></app-car-seat-drop>
-                <app-car-seat-drop
-                    [selected]="rightNutPerson$ | ngrxPush"
-                    (selectedChange)="onSeatChange(Seat.RIGHT_NUT, $event)"
-                    [disabled]="(rightNutSeat$ | ngrxPush)?.isDisabled ?? false"
-                    (disabledChange)="onSeatDisableChange(Seat.RIGHT_NUT, $event)"
-                    placeholder="Right Nut"
-                ></app-car-seat-drop>
-            </div>
-            <div fxLayout="row" fxLayoutAlign="space-evenly">
-                <app-car-seat-drop
-                    [selected]="leftBackPerson$ | ngrxPush"
-                    (selectedChange)="onSeatChange(Seat.LEFT_BACK, $event)"
-                    [disabled]="(leftBackSeat$ | ngrxPush)?.isDisabled ?? false"
-                    (disabledChange)="onSeatDisableChange(Seat.LEFT_BACK, $event)"
-                    placeholder="Left Back"
-                ></app-car-seat-drop>
-                <app-car-seat-drop
-                    [selected]="rightBackPerson$ | ngrxPush"
-                    (selectedChange)="onSeatChange(Seat.RIGHT_BACK, $event)"
-                    [disabled]="(rightBackSeat$ | ngrxPush)?.isDisabled ?? false"
-                    (disabledChange)="onSeatDisableChange(Seat.RIGHT_BACK, $event)"
-                    placeholder="Right Back"
-                ></app-car-seat-drop>
-            </div>
+    <div fxLayout="column" fxLayoutGap="2rem" style="max-width: 400px">
+        <div fxLayout="row" fxLayoutAlign="space-evenly">
+            <app-car-seat-drop
+                [selected]="driverPerson$ | ngrxPush"
+                (selectedChange)="onSeatChange(Seat.DRIVER, $event)"
+                [disabled]="(driverSeat$ | ngrxPush)?.isDisabled ?? false"
+                (disabledChange)="onSeatDisableChange(Seat.DRIVER, $event)"
+                placeholder="Drop Driver Here"
+            ></app-car-seat-drop>
+            <app-car-seat-drop
+                [selected]="shotgunPerson$ | ngrxPush"
+                (selectedChange)="onSeatChange(Seat.SHOTGUN, $event)"
+                [disabled]="(shotgunSeat$ | ngrxPush)?.isDisabled ?? false"
+                (disabledChange)="onSeatDisableChange(Seat.SHOTGUN, $event)"
+                placeholder="Shotgun"
+            ></app-car-seat-drop>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="space-evenly">
+            <app-car-seat-drop
+                [selected]="leftNutPerson$ | ngrxPush"
+                (selectedChange)="onSeatChange(Seat.LEFT_NUT, $event)"
+                [disabled]="(leftNutSeat$ | ngrxPush)?.isDisabled ?? false"
+                (disabledChange)="onSeatDisableChange(Seat.LEFT_NUT, $event)"
+                placeholder="Left Nut"
+            ></app-car-seat-drop>
+            <app-car-seat-drop
+                [selected]="middlePerson$ | ngrxPush"
+                (selectedChange)="onSeatChange(Seat.MIDDLE, $event)"
+                [disabled]="(middleSeat$ | ngrxPush)?.isDisabled ?? false"
+                (disabledChange)="onSeatDisableChange(Seat.MIDDLE, $event)"
+                placeholder="Middle"
+            ></app-car-seat-drop>
+            <app-car-seat-drop
+                [selected]="rightNutPerson$ | ngrxPush"
+                (selectedChange)="onSeatChange(Seat.RIGHT_NUT, $event)"
+                [disabled]="(rightNutSeat$ | ngrxPush)?.isDisabled ?? false"
+                (disabledChange)="onSeatDisableChange(Seat.RIGHT_NUT, $event)"
+                placeholder="Right Nut"
+            ></app-car-seat-drop>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="space-evenly">
+            <app-car-seat-drop
+                [selected]="leftBackPerson$ | ngrxPush"
+                (selectedChange)="onSeatChange(Seat.LEFT_BACK, $event)"
+                [disabled]="(leftBackSeat$ | ngrxPush)?.isDisabled ?? false"
+                (disabledChange)="onSeatDisableChange(Seat.LEFT_BACK, $event)"
+                placeholder="Left Back"
+            ></app-car-seat-drop>
+            <app-car-seat-drop
+                [selected]="rightBackPerson$ | ngrxPush"
+                (selectedChange)="onSeatChange(Seat.RIGHT_BACK, $event)"
+                [disabled]="(rightBackSeat$ | ngrxPush)?.isDisabled ?? false"
+                (disabledChange)="onSeatDisableChange(Seat.RIGHT_BACK, $event)"
+                placeholder="Right Back"
+            ></app-car-seat-drop>
         </div>
     </div>
 </div>

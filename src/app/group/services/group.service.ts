@@ -24,7 +24,7 @@ export class GroupService {
                         id: personDto.id,
                         name: personDto.name,
                         groupId: personDto.groupId,
-                        isInCar: false,
+                        isInCar: true,
                     };
                 });
 
