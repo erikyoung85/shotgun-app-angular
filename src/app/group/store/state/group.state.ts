@@ -1,7 +1,9 @@
+import { AsyncDataItem } from "src/app/shared/utils/aysnc-data-item";
+
 export const groupFeatureKey = 'groupState';
 
 export interface GroupState {
-    group: Group | undefined;
+    group: AsyncDataItem<Group | undefined>;
 }
 
 export interface Group {

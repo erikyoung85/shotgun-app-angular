@@ -4,11 +4,13 @@ import { IconButtonComponent } from './components/icon-button/icon-button.compon
 import { NgMaterialModule } from './ng-material.module';
 import { LetDirective, PushPipe } from '@ngrx/component';
 import { ConfirmDeleteDialogComponent } from './components/shared-dialog/confirm-delete-dialog.component';
+import { LoaderDirective } from './directives/loading-overlay/loading-overlay.directive';
 
 @NgModule({
     declarations: [
         IconButtonComponent,
         ConfirmDeleteDialogComponent,
+        LoaderDirective,
     ],
     exports: [
         IconButtonComponent,
@@ -16,6 +18,7 @@ import { ConfirmDeleteDialogComponent } from './components/shared-dialog/confirm
         LetDirective, 
         PushPipe, 
         ConfirmDeleteDialogComponent,
+        LoaderDirective,
     ],
     imports: [
         CommonModule,

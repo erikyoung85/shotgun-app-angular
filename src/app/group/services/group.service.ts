@@ -16,7 +16,7 @@ export class GroupService {
         const params = {
             groupId: groupId,
         }
-        return this.http.post<GetGroupResponseDtoV1>(url, { params }).pipe(
+        return this.http.get<GetGroupResponseDtoV1>(url, { params }).pipe(
             map(res => {
                 const personDict: { [personId: number]: Person } = {};
                 res.people.forEach(personDto => {

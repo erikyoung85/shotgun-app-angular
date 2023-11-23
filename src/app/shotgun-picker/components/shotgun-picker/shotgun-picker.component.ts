@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import * as shotgunPickerSelectors from '../../store/selectors/shotgun-picker.selectors';
 import * as shotgunPickerActions from '../../store/actions/shotgun-picker.actions';
 import * as groupActions from 'src/app/group/store/actions/group.actions';
-import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { Passenger, Seat } from '../../store/state/shotgun-picker.state';
 
 @Component({
@@ -40,7 +40,7 @@ export class ShotgunPickerComponent implements OnInit {
     rightBackPerson$ = this.store.select(shotgunPickerSelectors.selectRightBackPerson);
 
     ngOnInit(): void {
-        this.store.dispatch(groupActions.FetchGroup({ groupId: 0 }));
+        this.store.dispatch(groupActions.FetchGroup());
         this.store.dispatch(shotgunPickerActions.InitPassengers());
     }
 

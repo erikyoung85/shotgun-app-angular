@@ -3,7 +3,6 @@ import { Group, Person } from "../state/group.state";
 
 export const FetchGroup = createAction(
     '[Group] Fetch Group',
-    props<{ groupId: number }>(),
 );
 export const FetchGroupSuccess = createAction(
     '[Group] Fetch Group Success',

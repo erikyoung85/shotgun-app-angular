@@ -5,7 +5,9 @@ export default async function handler(
     request: VercelRequest,
     response: VercelResponse,
 ) {
-    const groupId = 1;
+    const groupId = Number(request.query.groupId);
+    if (isNaN(groupId)) 
+        return response.status(400).json({ message: 'groupId must be a number' })
 
     try {
         const client = await sql.connect();

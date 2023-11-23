@@ -1,4 +1,8 @@
-<mat-tab-group class="common-layout-tabs" headerPosition="below">
+<mat-tab-group 
+    class="common-layout-tabs" 
+    headerPosition="below"
+    [loadingOverlay]="(isGroupLoading$ | ngrxPush) ?? true"
+>
 
     <mat-tab label="Shotgun">
         <app-shotgun-picker></app-shotgun-picker>

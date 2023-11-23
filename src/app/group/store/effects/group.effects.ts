@@ -1,11 +1,12 @@
 import { Actions, concatLatestFrom, createEffect, ofType } from "@ngrx/effects";
-import { Action, Store } from "@ngrx/store";
+import { Store } from "@ngrx/store";
 import { Injectable } from "@angular/core";
 import { catchError, map, of, switchMap } from "rxjs";
 import * as groupActions from '../actions/group.actions';
 import * as groupSelectors from '../selectors/group.selectors';
 import { GroupService } from "../../services/group.service";
 import { isNotNil } from "src/app/shared/utils/is-not-nil";
+import * as routerSelectors from 'src/app/routing/store/selectors/routing.selectors';
 
 @Injectable()
 export class GroupEffects {
@@ -14,11 +15,16 @@ export class GroupEffects {
     fetchGroup$ = createEffect(() =>
         this.actions$.pipe(
             ofType(groupActions.FetchGroup),
-            switchMap((action) => {
-                return this.groupService.getGroup(action.groupId).pipe(
-                    map((group) => groupActions.FetchGroupSuccess({ group })),
-                    catchError((errMsg) => of(groupActions.FetchGroupFailure({ errMsg })))
-                )
+            concatLatestFrom(() => [this.store.select(routerSelectors.selectGroupId)]),
+            switchMap(([, groupId]) => {
+                if (groupId !== undefined) {
+                    return this.groupService.getGroup(groupId).pipe(
+                        map((group) => groupActions.FetchGroupSuccess({ group })),
+                        catchError((errMsg) => of(groupActions.FetchGroupFailure({ errMsg })))
+                    )
+                } else {
+                    return [];
+                }
             })
         ),
     )

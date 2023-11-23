@@ -1,7 +1,7 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Router } from '@angular/router';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import * as routerSelectors from 'src/app/routing/store/selectors/routing.selectors'
+import * as groupSelectors from 'src/app/group/store/selectors/group.selectors';
 
 @Component({
     selector: 'app-shotgun-picker-container',
@@ -10,8 +10,9 @@ import * as routerSelectors from 'src/app/routing/store/selectors/routing.select
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ShotgunPickerContainerComponent implements OnInit {
-    constructor(private store: Store, private router: Router) { }
+    constructor(private store: Store) { }
 
+    isGroupLoading$ = this.store.select(groupSelectors.selectGroupIsLoading);
     activeRoute$ = this.store.select(routerSelectors.selectCurrentRoute);
 
     ngOnInit(): void {
