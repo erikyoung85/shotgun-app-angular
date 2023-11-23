@@ -57,6 +57,37 @@ export const groupReducer = createReducer(INITIAL_GROUP_STATE,
         }
     }),
 
+    on(groupActions.EditPerson, (state): GroupState => {        
+        return {
+            ...state,
+            group: wrapAsAsyncDataItem(state.group.data, AsyncDataItemState.LOADING)
+        }
+    }),
+    on(groupActions.EditPersonSuccess, (state, action): GroupState => {
+        const group = unwrapAsyncDataItem(state.group);
+        if (group === undefined) return state;
+        
+        return {
+            ...state,
+            group: wrapAsAsyncDataItem({
+                ...group,
+                personDict: {
+                    ...group.personDict,
+                    [action.person.id]: {
+                        ...action.person,
+                        isInCar: true,
+                    },
+                }
+            }, AsyncDataItemState.LOADED)
+        }
+    }),
+    on(groupActions.EditPersonFailure, (state, action): GroupState => {        
+        return {
+            ...state,
+            group: wrapAsAsyncDataItem(state.group.data, AsyncDataItemState.ERROR, action.errMsg)
+        }
+    }),
+
     on(groupActions.DeletePersonFromGroup, (state): GroupState => {
         return {
             ...state,

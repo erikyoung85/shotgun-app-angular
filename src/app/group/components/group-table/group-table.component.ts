@@ -47,7 +47,7 @@ export class GroupTableComponent implements OnInit {
 
         dialogRef.componentInstance.newPersonEmitter.subscribe((newPerson) => {
             if (newPerson !== null) {
-                console.log('new person: ', newPerson);
+                this.store.dispatch(groupActions.EditPerson({ person: newPerson }));
             }
 
             dialogRef.close();

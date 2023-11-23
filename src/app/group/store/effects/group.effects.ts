@@ -29,6 +29,32 @@ export class GroupEffects {
         ),
     )
 
+    addPersonToGroup$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(groupActions.AddPersonToGroup),
+            concatLatestFrom(() => this.store.select(groupSelectors.selectGroup).pipe(isNotNil())),
+            switchMap(([action, group]) => {
+                return this.groupService.addPersonToGroup(group?.id, action.personName).pipe(
+                    map((person) => groupActions.AddPersonToGroupSuccess({ person })),
+                    catchError((errMsg) => of(groupActions.AddPersonToGroupFailure({ errMsg })))
+                )
+            })
+        ),
+    )
+
+    editPerson$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(groupActions.EditPerson),
+            concatLatestFrom(() => this.store.select(groupSelectors.selectGroup).pipe(isNotNil())),
+            switchMap(([action, group]) => {
+                return this.groupService.editPerson(group?.id, action.person).pipe(
+                    map((person) => groupActions.EditPersonSuccess({ person })),
+                    catchError((errMsg) => of(groupActions.EditPersonFailure({ errMsg })))
+                )
+            })
+        ),
+    )
+
     deletePersonFromGroup$ = createEffect(() =>
         this.actions$.pipe(
             ofType(groupActions.DeletePersonFromGroup),
@@ -41,19 +67,6 @@ export class GroupEffects {
                         return groupActions.DeletePersonFromGroupSuccess({ personDict: newPersonDict })
                     }),
                     catchError((errMsg) => of(groupActions.DeletePersonFromGroupFailure({ errMsg })))
-                )
-            })
-        ),
-    )
-
-    addPersonToGroup$ = createEffect(() =>
-        this.actions$.pipe(
-            ofType(groupActions.AddPersonToGroup),
-            concatLatestFrom(() => this.store.select(groupSelectors.selectGroup).pipe(isNotNil())),
-            switchMap(([action, group]) => {
-                return this.groupService.addPersonToGroup(group?.id, action.personName).pipe(
-                    map((person) => groupActions.AddPersonToGroupSuccess({ person })),
-                    catchError((errMsg) => of(groupActions.AddPersonToGroupFailure({ errMsg })))
                 )
             })
         ),

@@ -1,5 +1,5 @@
 export interface PersonResponseDtoV1 {
     id: number;
     name: string;
-    groupId: number;
+    group_id: number;
 }

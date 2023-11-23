@@ -26,6 +26,19 @@ export const AddPersonToGroupFailure = createAction(
     props<{ errMsg: string }>(),
 );
 
+export const EditPerson = createAction(
+    '[Group] Edit person',
+    props<{ person: Person }>(),
+);
+export const EditPersonSuccess = createAction(
+    '[Group] Edit person Success',
+    props<{ person: Person }>(),
+);
+export const EditPersonFailure = createAction(
+    '[Group] Edit person Failure',
+    props<{ errMsg: string }>(),
+);
+
 export const DeletePersonFromGroup = createAction(
     '[Group] Delete person from group',
     props<{ personId: number }>(),

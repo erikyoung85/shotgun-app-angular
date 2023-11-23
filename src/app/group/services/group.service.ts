@@ -23,7 +23,7 @@ export class GroupService {
                     personDict[personDto.id] = {
                         id: personDto.id,
                         name: personDto.name,
-                        groupId: personDto.groupId,
+                        groupId: personDto.group_id,
                         isInCar: true,
                     };
                 });
@@ -53,6 +53,14 @@ export class GroupService {
         const body = {
             groupId: groupId,
             personName: personName,
+        }
+        return this.http.post<Person>(url, { body });
+    }
+
+    editPerson(groupId: number, person: Person): Observable<Person> {
+        const url = `/api/group/editPerson`;
+        const body = {
+            person: person,
         }
         return this.http.post<Person>(url, { body });
     }
