@@ -10,12 +10,13 @@
         cdkDropList
         cdkDropListOrientation="horizontal"
         cdkDragBoundary=".drag-container"
-        [cdkDropListData]="allPassengers$ | async"
+        [cdkDropListData]="availablePassengers$ | async"
+        (cdkDropListDropped)="onDropToRemove($event)"
         cdkDropListSortingDisabled
     >
         <div 
             class="drag-box-horizontal" 
-            *ngFor="let passenger of allPassengers$ | async"
+            *ngFor="let passenger of availablePassengers$ | async"
             cdkDrag 
             cdkDragBoundary=".drag-container"
         >

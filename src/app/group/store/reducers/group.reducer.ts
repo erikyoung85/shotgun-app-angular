@@ -26,7 +26,10 @@ export const groupReducer = createReducer(INITIAL_GROUP_STATE,
                 ...state.group,
                 personDict: {
                     ...state.group.personDict,
-                    [action.person.id]: action.person,
+                    [action.person.id]: {
+                        ...action.person,
+                        isInCar: true,
+                    },
                 }
             }
         }

@@ -16,7 +16,7 @@ export class ShotgunPickerComponent implements OnInit {
     Seat = Seat;
     constructor(private store: Store) { }
 
-    allPassengers$ = this.store.select(shotgunPickerSelectors.selectAllPassengers);
+    availablePassengers$ = this.store.select(shotgunPickerSelectors.selectAvailablePassengers);
 
     driverSeat$ = this.store.select(shotgunPickerSelectors.selectDriverSeat);
     driverPerson$ = this.store.select(shotgunPickerSelectors.selectDriverPerson);
@@ -39,39 +39,16 @@ export class ShotgunPickerComponent implements OnInit {
     rightBackSeat$ = this.store.select(shotgunPickerSelectors.selectRightBackSeat);
     rightBackPerson$ = this.store.select(shotgunPickerSelectors.selectRightBackPerson);
 
-    items = ['Carrots', 'Tomatoes', 'Onions', 'Apples', 'Avocados'];
-    selected = ['Oranges'];
-
     ngOnInit(): void {
-        this.allPassengers$.subscribe((passengers) => {
-            console.log('people: ', passengers);
-        })
-
         this.store.dispatch(groupActions.FetchGroup({ groupId: 0 }));
         this.store.dispatch(shotgunPickerActions.InitPassengers());
     }
 
-    drop(event: CdkDragDrop<string[]>) {
-        if (event.previousContainer === event.container) {
-            moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-        } else {
-            transferArrayItem(
-                event.previousContainer.data,
-                event.container.data,
-                event.previousIndex,
-                event.currentIndex,
-            );
-        }
-    }
-
-    dropInList(event: CdkDragDrop<string[]>) {
-        if (event.previousContainer !== event.container) {
-            transferArrayItem(
-                event.previousContainer.data,
-                event.container.data,
-                event.previousIndex,
-                event.currentIndex,
-            );
+    onDropToRemove(event: CdkDragDrop<Passenger[] | null>) {
+        debugger;
+        const oldSeat = event.previousContainer.data?.[event.previousIndex]?.carSeat?.seat;
+        if (oldSeat !== undefined) {
+            this.store.dispatch(shotgunPickerActions.SetSeatPassengerIdSelection({ seat: oldSeat, passengerId: undefined }));
         }
     }
 
