@@ -2,11 +2,13 @@
     <mat-dialog-content>
         <div class="app-modal bg-primary-lighter-grey">
             <p>
-                Enter a name for the new person
+                Enter a unique name for this person
             </p>
 
             <mat-form-field>
-                <input matInput placeholder="Person Name" [formControl]="formControl">
+                <input matInput placeholder="Group Name" [formControl]="formControl">
+                <mat-error *ngIf="formControl.hasError('uniqueName')">This name is taken</mat-error>
+                <mat-error *ngIf="formControl.hasError('required')">Name cannot be empty</mat-error>
             </mat-form-field>
         </div>
     </mat-dialog-content>
@@ -24,9 +26,9 @@
             mat-raised-button
             color="primary"
             class="font-bold font-sm bg-primary-darker-grey white button-radius-padding"
-            (click)="onAddClick()"
+            (click)="onSaveClick()"
         >
-            Add
+            Save
         </button>
     </mat-dialog-actions>
 </div>

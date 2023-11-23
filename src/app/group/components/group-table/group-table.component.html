@@ -20,6 +20,15 @@
         </mat-cell>
     </ng-container>
 
+    <ng-container matColumnDef="edit">
+        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+        <mat-cell *matCellDef="let element">
+            <button mat-icon-button (click)="onEditPerson(element)">
+                <mat-icon fontIcon="edit"></mat-icon>
+            </button>
+        </mat-cell>
+    </ng-container>
+
     <ng-container matColumnDef="delete">
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
         <mat-cell *matCellDef="let element">

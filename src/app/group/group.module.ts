@@ -9,10 +9,10 @@ import { groupReducer } from './store/reducers/group.reducer';
 import { GroupTableComponent } from './components/group-table/group-table.component';
 import { GroupContainerComponent } from './components/group-container/group-container.component';
 import { EditGroupNameComponent } from './components/edit-group-name/edit-group-name.component';
-import { AddPersonComponent } from './components/add-person/add-person.component';
+import { PersonFormComponent } from './components/person-form/person-form.component';
 
 @NgModule({
-  declarations: [GroupTableComponent, GroupContainerComponent, EditGroupNameComponent, AddPersonComponent],
+  declarations: [GroupTableComponent, GroupContainerComponent, EditGroupNameComponent, PersonFormComponent],
   exports: [GroupTableComponent, GroupContainerComponent],
   imports: [
     CommonModule,

@@ -5,7 +5,7 @@ import * as groupActions from 'src/app/group/store/actions/group.actions';
 import { Person } from 'src/app/group/store/state/group.state';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ConfirmDeleteDialogComponent } from 'src/app/shared/components/shared-dialog/confirm-delete-dialog.component';
-import { AddPersonComponent } from '../add-person/add-person.component';
+import { PersonFormComponent } from '../person-form/person-form.component';
 
 
 @Component({
@@ -15,7 +15,7 @@ import { AddPersonComponent } from '../add-person/add-person.component';
 export class GroupTableComponent implements OnInit {
     constructor(private store: Store, public matDialog: MatDialog) {}
 
-    displayedColumns = ['id', 'name', 'isInCar', 'delete'];
+    displayedColumns = ['name', 'isInCar', 'edit', 'delete'];
 
     allPeople$ = this.store.select(groupSelectors.selectAllPeople);
 
@@ -27,12 +27,27 @@ export class GroupTableComponent implements OnInit {
     }
 
     onAddNewPerson() {
-        let dialogRef: MatDialogRef<AddPersonComponent, any>;
-        dialogRef = this.matDialog.open(AddPersonComponent);
+        let dialogRef: MatDialogRef<PersonFormComponent, any>;
+        dialogRef = this.matDialog.open(PersonFormComponent);
 
-        dialogRef.componentInstance.newPersonName.subscribe((newPersonName: string) => {
-            if (newPersonName !== null) {
-                this.store.dispatch(groupActions.AddPersonToGroup({ personName: newPersonName }));
+        dialogRef.componentInstance.newPersonEmitter.subscribe((newPerson) => {
+            if (newPerson !== null) {
+                this.store.dispatch(groupActions.AddPersonToGroup({ personName: newPerson.name }));
+            }
+
+            dialogRef.close();
+        });
+    }
+
+    onEditPerson(person: Person) {
+        let dialogRef: MatDialogRef<PersonFormComponent, any>;
+        dialogRef = this.matDialog.open(PersonFormComponent);
+
+        dialogRef.componentInstance.person = person;
+
+        dialogRef.componentInstance.newPersonEmitter.subscribe((newPerson) => {
+            if (newPerson !== null) {
+                console.log('new person: ', newPerson);
             }
 
             dialogRef.close();
