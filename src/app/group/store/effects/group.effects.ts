@@ -1,16 +1,26 @@
 import { Actions, concatLatestFrom, createEffect, ofType } from "@ngrx/effects";
 import { Store } from "@ngrx/store";
 import { Injectable } from "@angular/core";
-import { catchError, map, of, switchMap } from "rxjs";
+import { catchError, map, of, switchMap, take, tap } from "rxjs";
 import * as groupActions from '../actions/group.actions';
 import * as groupSelectors from '../selectors/group.selectors';
 import { GroupService } from "../../services/group.service";
 import { isNotNil } from "src/app/shared/utils/is-not-nil";
 import * as routerSelectors from 'src/app/routing/store/selectors/routing.selectors';
+import { Router } from "@angular/router";
+import { MatDialog, MatDialogRef } from "@angular/material/dialog";
+import { GroupNotFoundAction, GroupNotFoundComponent } from "../../components/group-not-found/group-not-found.component";
+import { AddNewGroupComponent } from "../../components/add-new-group/add-new-group.component";
 
 @Injectable()
 export class GroupEffects {
-    constructor(private actions$: Actions, private store: Store, private groupService: GroupService) {}
+    constructor(
+        private actions$: Actions, 
+        private store: Store, 
+        private groupService: GroupService,
+        private router: Router,
+        public matDialog: MatDialog,
+    ) {}
 
     fetchGroup$ = createEffect(() =>
         this.actions$.pipe(
@@ -23,8 +33,37 @@ export class GroupEffects {
                         catchError((errMsg) => of(groupActions.FetchGroupFailure({ errMsg })))
                     )
                 } else {
-                    return [];
+                    return of(groupActions.FetchGroupFailure({ errMsg: 'No group id provided' }))
                 }
+            })
+        ),
+    )
+
+    addNewGroup$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(groupActions.AddNewGroup),
+            switchMap((action) => {
+                return this.groupService.createGroup(action.groupName).pipe(
+                    map((group) => groupActions.AddNewGroupSuccess({ group })),
+                    catchError((errMsg) => of(groupActions.AddNewGroupFailure({ errMsg })))
+                )
+            })
+        ),
+    )
+    addNewGroupSuccess$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(groupActions.AddNewGroupSuccess),
+            map((action) => {
+                this.router.navigate([], { queryParams: { groupId: action.group.id } });
+            })
+        ),
+        { dispatch: false }
+    )
+    addNewGroupFailure$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(groupActions.AddNewGroupFailure),
+            map(() => {
+                return groupActions.OpenGroupNotFoundModal();
             })
         ),
     )
@@ -83,5 +122,46 @@ export class GroupEffects {
                 )
             })
         ),
+    )
+
+    openGroupNotFoundModal$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(groupActions.OpenGroupNotFoundModal),
+            tap(() => {
+                let dialogRef: MatDialogRef<GroupNotFoundComponent, any>;
+                dialogRef = this.matDialog.open(GroupNotFoundComponent);
+
+                dialogRef.componentInstance.chosenAction.pipe(take(1)).subscribe((chosenAction) => {
+                    dialogRef.close();
+
+                    if (chosenAction === GroupNotFoundAction.TRY_AGAIN) {
+                        this.router.navigate([]);
+                    }
+                    else if (chosenAction === GroupNotFoundAction.CREATE_NEW_GROUP) {
+                        this.store.dispatch(groupActions.OpenCreateNewGroupModal());
+                    }
+                })
+            })
+        ),
+        { dispatch: false }
+    )
+
+    openCreateNewGroupModal$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(groupActions.OpenCreateNewGroupModal),
+            tap(() => {
+                let dialogRef: MatDialogRef<AddNewGroupComponent, any>;
+                dialogRef = this.matDialog.open(AddNewGroupComponent);
+
+                dialogRef.componentInstance.newGroupName.pipe(take(1)).subscribe((newGroupName) => {
+                    if (newGroupName) {
+                        this.store.dispatch(groupActions.AddNewGroup({ groupName: newGroupName }));
+                    }
+
+                    dialogRef.close();
+                })
+            })
+        ),
+        { dispatch: false }
     )
 }

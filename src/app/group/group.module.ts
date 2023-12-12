@@ -10,9 +10,11 @@ import { GroupTableComponent } from './components/group-table/group-table.compon
 import { GroupContainerComponent } from './components/group-container/group-container.component';
 import { EditGroupNameComponent } from './components/edit-group-name/edit-group-name.component';
 import { PersonFormComponent } from './components/person-form/person-form.component';
+import { GroupNotFoundComponent } from './components/group-not-found/group-not-found.component';
+import { AddNewGroupComponent } from './components/add-new-group/add-new-group.component';
 
 @NgModule({
-  declarations: [GroupTableComponent, GroupContainerComponent, EditGroupNameComponent, PersonFormComponent],
+  declarations: [GroupTableComponent, GroupContainerComponent, EditGroupNameComponent, PersonFormComponent, GroupNotFoundComponent, AddNewGroupComponent],
   exports: [GroupTableComponent, GroupContainerComponent],
   imports: [
     CommonModule,

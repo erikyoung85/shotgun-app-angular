@@ -13,6 +13,19 @@ export const FetchGroupFailure = createAction(
     props<{ errMsg: string }>(),
 );
 
+export const AddNewGroup = createAction(
+    '[Group] Add New Group',
+    props<{ groupName: string }>(),
+);
+export const AddNewGroupSuccess = createAction(
+    '[Group] Add New Group Success',
+    props<{ group: Group }>(),
+);
+export const AddNewGroupFailure = createAction(
+    '[Group] Add New Group Failure',
+    props<{ errMsg: string }>(),
+);
+
 export const AddPersonToGroup = createAction(
     '[Group] Add person to group',
     props<{ personName: string }>(),
@@ -68,4 +81,11 @@ export const SetGroupNameFailure = createAction(
 export const SetIsPersonInCar = createAction(
     '[Group] Set is person in car',
     props<{ personId: number, isInCar: boolean }>(),
+);
+
+export const OpenGroupNotFoundModal = createAction(
+    '[Group] Open Group Not Found Modal',
+);
+export const OpenCreateNewGroupModal = createAction(
+    '[Group] Open Create New Group Modal',
 );

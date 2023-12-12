@@ -2,14 +2,8 @@
     <mat-dialog-content>
         <div class="app-modal bg-primary-lighter-grey">
             <p>
-                Enter a unique name for this person
+                An error occured when searching for your requested group. Would you like to try again?
             </p>
-
-            <mat-form-field>
-                <input matInput placeholder="Person Name" [formControl]="formControl">
-                <mat-error *ngIf="formControl.hasError('uniqueName')">This name is taken</mat-error>
-                <mat-error *ngIf="formControl.hasError('required')">Name cannot be empty</mat-error>
-            </mat-form-field>
         </div>
     </mat-dialog-content>
     <mat-dialog-actions>
@@ -17,18 +11,18 @@
             mat-stroked-button
             mat-dialog-close
             class="font-bold font-sm button-radius-padding form-button-margin-right"
-            (click)="onCancelClick()"
+            (click)="onTryAgainClick()"
         >
-            Cancel
+            Try Again
         </button>
 
         <button
             mat-raised-button
             color="primary"
             class="font-bold font-sm bg-primary-darker-grey white button-radius-padding"
-            (click)="onSaveClick()"
+            (click)="onNewGroupClick()"
         >
-            Save
+            Create New Group
         </button>
     </mat-dialog-actions>
 </div>

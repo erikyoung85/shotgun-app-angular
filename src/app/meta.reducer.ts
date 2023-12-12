@@ -1,6 +1,6 @@
 import { Action, ActionReducer, MetaReducer } from "@ngrx/store";
 
-interface State {}
+export interface State {}
 
 export function consoleLogger(reducer: ActionReducer<State>): ActionReducer<State> {
     return (state: State | undefined, action: Action): State => {

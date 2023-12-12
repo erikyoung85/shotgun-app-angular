@@ -40,7 +40,6 @@ export class ShotgunPickerComponent implements OnInit {
     rightBackPerson$ = this.store.select(shotgunPickerSelectors.selectRightBackPerson);
 
     ngOnInit(): void {
-        this.store.dispatch(groupActions.FetchGroup());
         this.store.dispatch(shotgunPickerActions.InitPassengers());
     }
 

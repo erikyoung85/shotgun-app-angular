@@ -26,6 +26,26 @@ export const groupReducer = createReducer(INITIAL_GROUP_STATE,
         }
     }),
 
+    on(groupActions.AddNewGroup, (state, action): GroupState => {
+
+        return {
+            ...state,
+            group: wrapAsAsyncDataItem(undefined, AsyncDataItemState.LOADING)
+        }
+    }),
+    on(groupActions.AddNewGroupSuccess, (state, action): GroupState => {
+        return {
+            ...state,
+            group: wrapAsAsyncDataItem(action.group, AsyncDataItemState.LOADED)
+        }
+    }),
+    on(groupActions.AddNewGroupFailure, (state, action): GroupState => {
+        return {
+            ...state,
+            group: wrapAsAsyncDataItem(undefined, AsyncDataItemState.ERROR, action.errMsg)
+        }
+    }),
+
     on(groupActions.AddPersonToGroup, (state): GroupState => {        
         return {
             ...state,

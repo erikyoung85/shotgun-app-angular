@@ -1,6 +1,7 @@
 <mat-tab-group 
     class="common-layout-tabs" 
     headerPosition="below"
+    [(selectedIndex)]="selectedTabIdx"
     [loadingOverlay]="(isGroupLoading$ | ngrxPush) ?? true"
 >
 

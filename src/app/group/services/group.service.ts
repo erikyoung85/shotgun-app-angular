@@ -17,23 +17,17 @@ export class GroupService {
             groupId: groupId,
         }
         return this.http.get<GetGroupResponseDtoV1>(url, { params }).pipe(
-            map(res => {
-                const personDict: { [personId: number]: Person } = {};
-                res.people.forEach(personDto => {
-                    personDict[personDto.id] = {
-                        id: personDto.id,
-                        name: personDto.name,
-                        groupId: personDto.group_id,
-                        isInCar: true,
-                    };
-                });
+            map(this.mapGroupResponseDtoV1ToGroup)
+        );
+    }
 
-                return {
-                    id: res.id,
-                    name: res.name,
-                    personDict: personDict,
-                }
-            })
+    createGroup(groupName: string): Observable<Group> {
+        const url = `/api/group/addGroup`;
+        const body = {
+            groupName: groupName
+        }
+        return this.http.post<GetGroupResponseDtoV1>(url, body).pipe(
+            map(this.mapGroupResponseDtoV1ToGroup)
         );
     }
 
@@ -72,5 +66,23 @@ export class GroupService {
             personId: personId,
         }
         return this.http.post<boolean>(url, { body });
+    }
+
+    private mapGroupResponseDtoV1ToGroup(groupDto: GetGroupResponseDtoV1): Group {
+        const personDict: { [personId: number]: Person } = {};
+        groupDto.people.forEach(personDto => {
+            personDict[personDto.id] = {
+                id: personDto.id,
+                name: personDto.name,
+                groupId: personDto.group_id,
+                isInCar: true,
+            };
+        });
+
+        return {
+            id: groupDto.id,
+            name: groupDto.name,
+            personDict: personDict,
+        }
     }
 }

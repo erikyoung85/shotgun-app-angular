@@ -1,5 +1,15 @@
 import { VercelRequest, VercelResponse } from '@vercel/node';
 import { sql } from '@vercel/postgres';
+
+const mockResponse = {
+    id: 1,
+    name: 'mock group',
+    people: [
+        {group_id: 1, name: 'mock person 1', id: 1},
+        {group_id: 1, name: 'mock person 2', id: 2},
+        {group_id: 1, name: 'mock person 3', id: 3},
+    ]
+}
  
 export default async function handler(
     request: VercelRequest,
@@ -26,7 +36,8 @@ export default async function handler(
         const group = groupRes.rows[0];
         const people = peopleRes.rows;
         const groupDtoV1 = {
-            ...group,
+            id: group.id,
+            name: group.name,
             people: people
         }
 

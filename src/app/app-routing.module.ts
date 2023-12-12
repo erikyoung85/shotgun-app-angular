@@ -14,7 +14,7 @@ const routes: Routes = [
 @NgModule({
     imports: [
         StoreRouterConnectingModule.forRoot(),
-        RouterModule.forRoot(routes)
+        RouterModule.forRoot(routes, {onSameUrlNavigation: 'reload'})
     ],
     exports: [RouterModule]
 })
